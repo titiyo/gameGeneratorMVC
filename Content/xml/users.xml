@@ -1,0 +1,15 @@
+<?xml version='1.0' standalone='yes'?>
+<users>
+	<user> 
+		<login>c.barreto</login>
+		<pwd>test</pwd>
+	</user>
+	<user> 
+		<login>y.bondeau</login>
+		<pwd>test</pwd>
+	</user>
+	<user> 
+		<login>j.breton</login>
+		<pwd>test</pwd>
+	</user>
+</users>
