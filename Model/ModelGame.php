@@ -40,7 +40,7 @@ class ModelGame extends Model {
         $difficulte = $difficulty;
 
         //On change de répertoire
-        chdir("../membres/".$nomprenom);
+        chdir("C:/Program Files (x86)/EasyPHP-DevServer-13.1VC9/data/localweb/Projet5A/gameGeneratorMVC/membres/jullienbreton");
 
         //Création du répertoire de jeu
         mkdir($titrejeu, 0777);
@@ -49,18 +49,18 @@ class ModelGame extends Model {
         chdir($titrejeu);
 
         //Le champ créateur pourrait être enlevé puisqu'on a déjà le nomprenom dans la var de session
-        $stringxml = "<<<XML
-            <?xml version='1.0'?>
-            <jeu>
-                <id>$id</id>
-                <datecreation>$datecreation</datecreation>
-                <nbsituation>$nbsituation</nbsituation>
-                <titre>$titrejeu</titre>
-                <createur>$nomprenom</createur>
-                <description>$description</description>
-                <difficulte>$difficulte</difficulte>
-            </jeu>
-            XML";
+$stringxml = <<<XML
+<?xml version='1.0'?>
+<jeu>
+    <id>$id</id>
+    <datecreation>$datecreation</datecreation>
+    <nbsituation>$nbsituation</nbsituation>
+    <titre>$titrejeu</titre>
+    <createur>$nomprenom</createur>
+    <description>$description</description>
+    <difficulte>$difficulte</difficulte>
+</jeu>
+XML;
 
         $xml = simplexml_load_string($stringxml);
 
@@ -69,8 +69,8 @@ class ModelGame extends Model {
 
         //Ajouter une balise <jeu> dans le fichier user.xml
         chdir("..");
-        $xml = simplexml_load_file("user.xml");
-        $nouveaujeu = $xml->jeux->addChild("jeu", $titrejeu);
-        $xml->asXml("user.xml");
+        $xml = simplexml_load_file("userGames.xml");
+        $nouveaujeu = $xml->addChild("jeu", $titrejeu);
+        $xml->asXml("userGames.xml");
     }
 }
