@@ -12,6 +12,10 @@ require_once 'Model/ModelGame.php';
 class ControllerGame extends Controller {
 
     private $modelGame;
+    private $gameTitle;
+    private $description;
+    private $owner;
+    private $difficulty;
     /**
      * Constructeur
      */
@@ -23,29 +27,74 @@ class ControllerGame extends Controller {
      *  Controleur par défaut
      */
     public function index() {
+        $this->generateView(array('gameTitle' => $this->gameTitle));
     }
 
     public function createGame()
     {
-        $gameTitle = $this->request->existParameter("gameTitle") ? $this->request->getParameter("gameTitle") : null;
-        $description = $this->request->existParameter("description") ? $this->request->getParameter("description") : null;
-        $owner = $this->request->existParameter("owner") ? $this->request->getParameter("owner") : null;
-        $difficulty = $this->request->existParameter("difficulty") ? $this->request->getParameter("difficulty") : null;
+        // Return the form with empty data
+        $this->generateView(array('gameTitle' => null, 'description' => null,
+            'owner' => null, 'difficulty' => null));
+    }
 
+    public function createGameFile()
+    {
+        $this->gameTitle = $this->request->getParameter("gameTitle");
+        $this->description = $this->request->getParameter("description");
+        $this->owner = $this->request->getParameter("owner");
+        $this->difficulty = $this->request->getParameter("difficulty");
 
-        if($gameTitle != null && $description != null && $owner != null && $difficulty != null)
+        if($this->gameTitle != null && $this->description != null && $this->owner != null && $this->difficulty != null)
         {
+            /***************************************************************************
+            *                    Create File Game
+            **************************************************************************/
+            $login = $_SESSION["login"];
+            setlocale(LC_TIME, 'fra_fra');
+            $createDate = strftime('%d%m%Y');
+            $id = uniqid();
+
+            $rootDirectory = "Content/xml/Members/".$login;
+            $fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
+
+            // Create the userGame directory if not existing and move in this directory
+            if(!file_exists($rootDirectory))
+            {
+                // Create the directory
+                mkdir($rootDirectory, 0777);
+            }
+            // Create Game Directory and move in this directory
+            if(!file_exists($fileGameDirectory))
+            {
+                // Create the directory
+                mkdir($fileGameDirectory, 0777);
+            }
+
             // Create the game
-            $this->modelGame->createGame($gameTitle ,$description, $owner, $difficulty);
+            $this->modelGame->createFileGame($fileGameDirectory, $id, $createDate, $this->gameTitle ,$this->description, $this->owner, $this->difficulty, $login);
+
+            /***************************************************************************
+             *                    Create User Games
+             **************************************************************************/
+            $UserGameFile = $rootDirectory . "/userGames.xml";
+
+            if(!file_exists($UserGameFile))
+            {
+                // Create File User Game
+                $this->modelGame->createUserFileGame($UserGameFile);
+            }
+            //Add game
+            $this->modelGame->addGameInUserFileGame($UserGameFile, $this->gameTitle);
+
             // Redirect to the game panel
-            $this->executeAction("index");
-            // header ('location: ../Index.php');
+            $this->executeAction("Index");
         }
-
-        // Return the form with data
-        $this->generateView(array('gameTitle' => $gameTitle, 'description' => $description,
-                                'owner' => $owner, 'difficulty' => $difficulty));
-
+        else
+        {
+            // Return the form with data
+            $this->generateView(array('gameTitle' => $this->gameTitle, 'description' => $this->description,
+                                'owner' => $this->owner, 'difficulty' => $this->difficulty));
+        }
     }
 
     public function CreateSituation()

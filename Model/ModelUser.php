@@ -17,19 +17,42 @@ class ModelUser extends Model {
         $this->fileXml = simplexml_load_file("Content/xml/users.xml");
     }
 
-    /** Renvoie vrai si l'utilisateur exit, sinon renvoie false
+    /**
      * @param $login
      * @param $pwd
-     * @return boolean
+     * @return array|null
      */
-    public function isExit($login, $pwd) {
+    public function getUser($login, $pwd) {
         foreach($this->fileXml->user as $usr)
         {
             if($usr->login == $login && $usr->pwd == $pwd)
             {
-                return true;
+                return array('login' => $login, 'group' => (string)$usr->attributes()->group);
             }
         }
-        return false;
+        return null;
+    }
+
+    /**
+     * @param $lname
+     * @param $fname
+     * @param $login
+     * @param $email
+     * @param $pwd
+     */
+    public function createUser($lname, $fname, $login, $email, $pwd)
+    {
+        $user = $this->fileXml->addChild('user');
+        $user->addAttribute('group', 'member');
+        $user->addChild('lname', $lname);
+        $user->addChild('fname', $fname);
+        $user->addChild('login', $login);
+        $user->addChild('pwd', $pwd);
+        $user->addChild('mail', $email);
+        $this->fileXml->asXML("Content/xml/users.xml");
+
+        $dom = dom_import_simplexml($this->fileXml)->ownerDocument;
+        $dom->formatOutput = true;
+        $dom->saveXML();
     }
 }

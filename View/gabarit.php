@@ -44,16 +44,37 @@
                             <ul class="nav">
                                 <li class="active"><a href="#">Catalogue</a></li>
                             </ul>
-                            <ul class="nav">
-                                <li class="active"><a href="game/createGame">Créer un jeu</a></li>
-                            </ul>
-                            <ul class="nav">
-                                <li class="active"><a href="#">Voir mes jeux</a></li>
-                            </ul>
+                            <?php if (isset($_SESSION["login"])):?>
+                                <ul class="nav">
+                                    <li class="active"><a href="game/createGame">Créer un jeu</a></li>
+                                </ul>
+                                <ul class="nav">
+                                    <li class="active"><a href="#">Voir mes jeux</a></li>
+                                </ul>
+                                <?php if(isset($_SESSION["group"]) && $_SESSION["group"]=="admin"): ?>
+                                    <ul class="nav">
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion</a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#">Action</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li class="nav-header"> … </li>
+                                                <li> … </li>
+                                                <li> … </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                <?php endif; ?>
+                            <?php endif; ?>
                             <?php
                             if (!isset($_SESSION["login"]))
                             {
                                 ?>
+                                <ul class="nav" style="float:right;">
+                                    <li class="active"><a href="Authentication/inscription">Inscription</a></li>
+                                </ul>
                                 <form method="post" class="navbar-form pull-right" action="Authentication/signIn">
                                     <input class="span2" id="login" name="login" type="text">
                                     <input class="span2" id="pwd" name="pwd" type="password" >

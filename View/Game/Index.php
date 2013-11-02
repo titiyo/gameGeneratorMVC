@@ -1,5 +1,6 @@
 <h1>Game Panel<h1/>
 
+<h2><?=$gameTitle?></h2>
 <div>
     <div>
         <h2>Personnage(s)</h2>

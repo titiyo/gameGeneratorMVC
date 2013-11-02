@@ -11,66 +11,62 @@ require_once 'Framework/Model.php';
 
 class ModelGame extends Model {
 
-    private $fileXml;
-
     public function __construct() {
-        $this->fileXml = simplexml_load_file("Content/xml/users.xml");
     }
 
     /**
+     * @param $UserGameFile
+     */
+    public function createUserFileGame($UserGameFile)
+    {
+        $stringxml = <<<XML
+<?xml version='1.0'?>
+<jeux>
+</jeux>
+XML;
+
+        $xml = simplexml_load_string($stringxml);
+        $xml->asXml($UserGameFile);
+    }
+
+    /**
+     * @param $UserGameFile
+     * @param $gameTitle
+     */
+    public function addGameInUserFileGame($UserGameFile, $gameTitle)
+    {
+        $xml = simplexml_load_file($UserGameFile);
+        $xml->addChild("jeu", $gameTitle);
+        $xml->asXml($UserGameFile);
+    }
+
+    /**
+     * @param $fileGameDirectory
+     * @param $id
+     * @param $createDate
      * @param $gameTitle
      * @param $description
      * @param $owner
      * @param $difficulty
+     * @param $login
      */
-    public function createGame($gameTitle, $description, $owner, $difficulty) {
-        //ON ADMET QU'UNE VARIABLE DE SESSION AVEC NOM ET PRENOM UTILISATEUR EXISTE
-        //PUISQU'IL S'EST AUTHENTIFIE
-        $nomprenom = "julienbreton";
-
-        //script création de jeu :
-        setlocale(LC_TIME, 'fra_fra');
-
-        $datecreation = strftime('%d%m%Y');
-        $id = uniqid();
-        $nbsituation = 0;
-        $titrejeu = $gameTitle;
-        $description = $description;
-        $createur = $owner;
-        $difficulte = $difficulty;
-
-        //On change de répertoire
-        chdir("C:/Program Files (x86)/EasyPHP-DevServer-13.1VC9/data/localweb/Projet5A/gameGeneratorMVC/membres/jullienbreton");
-
-        //Création du répertoire de jeu
-        mkdir($titrejeu, 0777);
-
-        //on se déplace dans le répertoire nouvellement créé
-        chdir($titrejeu);
-
-        //Le champ créateur pourrait être enlevé puisqu'on a déjà le nomprenom dans la var de session
+    public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $owner, $difficulty, $login) {
 $stringxml = <<<XML
 <?xml version='1.0'?>
 <jeu>
     <id>$id</id>
-    <datecreation>$datecreation</datecreation>
-    <nbsituation>$nbsituation</nbsituation>
-    <titre>$titrejeu</titre>
-    <createur>$nomprenom</createur>
+    <datecreation>$createDate</datecreation>
+    <nbsituation>0</nbsituation>
+    <titre>$gameTitle</titre>
+    <createur>$owner</createur>
     <description>$description</description>
-    <difficulte>$difficulte</difficulte>
+    <difficulte>$difficulty</difficulte>
 </jeu>
 XML;
 
         $xml = simplexml_load_string($stringxml);
 
-        $nomfichier = "fichier_jeu_".$nomprenom."_".$datecreation.".xml";
-        $xml->asXml($nomfichier);
-
-        //Ajouter une balise <jeu> dans le fichier user.xml
-        chdir("..");
-        $xml = simplexml_load_file("userGames.xml");
-        $nouveaujeu = $xml->addChild("jeu", $titrejeu);
-        $xml->asXml("userGames.xml");
+        $fileName = $fileGameDirectory."/fileGame_".$login."_".$createDate.".xml";
+        $xml->asXml($fileName);
     }
 }
