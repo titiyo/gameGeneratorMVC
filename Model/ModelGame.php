@@ -50,7 +50,8 @@ XML;
      * @param $difficulty
      * @param $login
      */
-    public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $owner, $difficulty, $login) {
+    public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $owner, $difficulty, $login)
+    {
 $stringxml = <<<XML
 <?xml version='1.0'?>
 <jeu>
@@ -68,5 +69,39 @@ XML;
 
         $fileName = $fileGameDirectory."/fileGame_".$login."_".$createDate.".xml";
         $xml->asXml($fileName);
+     }
+
+    /*
+    * @param $login
+    */
+    public function getGameList($login)
+    {
+        $dir = "Content/xml/members/";
+        $root = scandir($dir,1);
+        $foundDir=false;
+        foreach($root as $value)
+        {
+            if($login==$value)
+            {
+                $foundDir=true;
+                break;
+            }
+        }
+        if($foundDir)
+        {
+            $gameFileXml = simplexml_load_file("Content/xml/members/".$login."/userGames.xml");
+            $i=0;
+            foreach($gameFileXml->jeu as $game)
+            {
+                $gameList[$i]=$game;
+                $i++;
+            }
+        }
+        return $gameList;
+    }
+
+    public function gameDetails($game)
+    {
+
     }
 }

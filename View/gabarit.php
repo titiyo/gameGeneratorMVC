@@ -12,9 +12,9 @@
         <link href="<?= $rootWeb?>/Content/css/bootstrap.css" rel="stylesheet">
         <style type="text/css">
             body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
+                 padding-top: 60px;
+                 padding-bottom: 40px;
+             }
         </style>
         <link href="<?= $rootWeb?>/Content/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -36,10 +36,10 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="brand" href="#">Game generator</a>
+                        <a class="brand">Game generator</a>
                         <div class="nav-collapse collapse">
                             <ul class="nav">
-                                <li class="active"><a href="#">Acceuil</a></li>
+                                <li class="active"><a href="#">Accueil</a></li>
                             </ul>
                             <ul class="nav">
                                 <li class="active"><a href="#">Catalogue</a></li>
@@ -49,7 +49,7 @@
                                     <li class="active"><a href="game/createGame">Créer un jeu</a></li>
                                 </ul>
                                 <ul class="nav">
-                                    <li class="active"><a href="#">Voir mes jeux</a></li>
+                                    <li class="active"><a href="game/viewGame">Voir mes jeux</a></li>
                                 </ul>
                                 <?php if(isset($_SESSION["group"]) && $_SESSION["group"]=="admin"): ?>
                                     <ul class="nav">
@@ -105,7 +105,9 @@
     </div> <!-- #global -->
     <!-- Le javascript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="<?= $rootWeb?>/Content/js/jquery-1.10.2.min.js"></script>
     <script src="<?= $rootWeb?>/Content/js/bootstrap.js"></script>
     <script src="<?= $rootWeb?>/Content/js/bootstrap.min.js"></script>
+    <script src="<?= $rootWeb?>/Content/js/bootstrap-collapse.js"></script>
     </body>
 </html>

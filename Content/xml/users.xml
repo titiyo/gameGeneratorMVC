@@ -12,4 +12,5 @@
 		<login>j.breton</login>
 		<pwd>test</pwd>
 	</user>
-<user group="member"><lname>toto</lname><fname>titi</fname><login>toto.titi</login><pwd>test</pwd><mail>toto.titi@gmail.com</mail></user><user group="member"><lname>abcd</lname><fname>efgh</fname><login>abcd.efgh</login><pwd>test</pwd><mail>abcd.efgh@gmail.com</mail></user></users>
+    <user group="member">
+        <lname>toto</lname><fname>titi</fname><login>toto.titi</login><pwd>test</pwd><mail>toto.titi@gmail.com</mail></user><user group="member"><lname>abcd</lname><fname>efgh</fname><login>abcd.efgh</login><pwd>test</pwd><mail>abcd.efgh@gmail.com</mail></user></users>

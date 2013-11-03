@@ -111,4 +111,31 @@ class ControllerGame extends Controller {
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse));
     }
+
+    public function viewGame()
+    {
+        $gameTab=$this->modelGame->getGameList($_SESSION["login"]);
+        /*$gameList="<table class='table-bordered' style='height:100px;width:100px;'><thead><tr><th>N°</th><th>Nom du jeu</th><th>Action</th></tr></thead><tbody>";
+        for($i=0;$i<sizeof($gameTab);$i++)
+        {
+            $gameList .="<tr><td>".($i+1)."</td><td>".$gameTab[$i]."</td><td><input type='submit' value='Détails'/></td></tr>";
+        }
+        $gameList.="</tbody></table>";*/
+        $gameList='<div class="accordion" id="accordion2">';
+        for($i=1;$i<=sizeof($gameTab);$i++)
+        {
+            $detailsGame = $this->modelGame->gameDetails($gameTab[($i-1)]);
+            $gameList .='<div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#game'.$i.'">Jeux N°'.$i.' : '.$gameTab[($i-1)].'</a>
+                            </div>
+                            <div id="game'.$i.'" class="accordion-body collapse">
+                                <div class="accordion-inner">Anim pariatur cliche...</div>
+                            </div>
+                        </div>';
+        }
+        $gameList .='</div>';
+
+        $this->generateView(array('gameList' => $gameList));
+    }
 }

@@ -55,4 +55,6 @@ class ModelUser extends Model {
         $dom->formatOutput = true;
         $dom->saveXML();
     }
+
+
 }

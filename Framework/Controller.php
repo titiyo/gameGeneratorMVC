@@ -67,5 +67,4 @@ abstract class Controller {
         $vue = new View($this->action, $controller);
         $vue->generate($viewData);
     }
-
 }
