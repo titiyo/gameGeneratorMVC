@@ -89,7 +89,7 @@ XML;
         }
         if($foundDir)
         {
-            $gameFileXml = simplexml_load_file("Content/xml/members/".$login."/userGames.xml");
+            $gameFileXml = simplexml_load_file($dir.$login."/userGames.xml");
             $i=0;
             foreach($gameFileXml->jeu as $game)
             {
@@ -100,8 +100,27 @@ XML;
         return $gameList;
     }
 
-    public function gameDetails($game)
+    public function gameDetails($nameGame)
     {
-
+        $gameDir ="Content/xml/members/".$_SESSION["login"]."/".$nameGame."/";
+        //echo $gameDir."<br>";
+        $root = scandir($gameDir,1);
+        $detailTab=null;
+        foreach($root as $value)
+        {
+            if($value!="." && $value!="..")
+            {
+                $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
+                //echo "Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value."<br>";
+                $detailTab["jeu"]=array("datecreation"=> $detailGame->datecreation,
+                    "titre"=>$detailGame->titre,
+                    "createur"=>$detailGame->createur,
+                    "nbsituation"=>$detailGame->nbsituation,
+                    "description"=>$detailGame->description,
+                    "difficulte"=>$detailGame->difficulte);
+                break;
+            }
+        }
+        return $detailTab;
     }
 }

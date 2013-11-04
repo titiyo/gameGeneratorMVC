@@ -115,12 +115,6 @@ class ControllerGame extends Controller {
     public function viewGame()
     {
         $gameTab=$this->modelGame->getGameList($_SESSION["login"]);
-        /*$gameList="<table class='table-bordered' style='height:100px;width:100px;'><thead><tr><th>N°</th><th>Nom du jeu</th><th>Action</th></tr></thead><tbody>";
-        for($i=0;$i<sizeof($gameTab);$i++)
-        {
-            $gameList .="<tr><td>".($i+1)."</td><td>".$gameTab[$i]."</td><td><input type='submit' value='Détails'/></td></tr>";
-        }
-        $gameList.="</tbody></table>";*/
         $gameList='<div class="accordion" id="accordion2">';
         for($i=1;$i<=sizeof($gameTab);$i++)
         {
@@ -130,7 +124,14 @@ class ControllerGame extends Controller {
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#game'.$i.'">Jeux N°'.$i.' : '.$gameTab[($i-1)].'</a>
                             </div>
                             <div id="game'.$i.'" class="accordion-body collapse">
-                                <div class="accordion-inner">Anim pariatur cliche...</div>
+                                <div class="accordion-inner">
+                                    <label style="font-weight:bold;">Titre du jeu : </label>'.$detailsGame["jeu"]["titre"].'<br>
+                                    <label style="font-weight:bold;">Créateur : </label>'.$detailsGame["jeu"]["createur"].'<br>
+                                    <label style="font-weight:bold;">Date de création : </label>'.$detailsGame["jeu"]["datecreation"].'<br>
+                                    <label style="font-weight:bold;">Description du jeu : </label>'.$detailsGame["jeu"]["description"].'<br>
+                                    <label style="font-weight:bold;">Difficulté du jeu : </label>'.$detailsGame["jeu"]["difficulte"].'<br>
+                                    <label style="font-weight:bold;">Nombre de situation(s) : </label>'.$detailsGame["jeu"]["nbsituation"].'<br>
+                                </div>
                             </div>
                         </div>';
         }
