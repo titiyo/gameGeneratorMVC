@@ -9,7 +9,7 @@
 		<pwd>test</pwd>
 	</user>
 	<user group="member">
-		<login>j.breton</login>
+		<login>jbreton</login>
 		<pwd>test</pwd>
 	</user>
     <user group="member">

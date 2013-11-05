@@ -16,6 +16,18 @@ class ControllerGame extends Controller {
     private $description;
     private $owner;
     private $difficulty;
+    
+    private $situationType;
+    private $situationTitle;
+    private $situationExposition;
+    private $situationQuestion;
+    private $situationReponse1;
+    private $situationNbPoint1;
+    private $situationReponse2;
+    private $situationNbPoint2;
+    private $situationReponse3;
+    private $situationNbPoint3;
+    
     /**
      * Constructeur
      */
@@ -97,9 +109,9 @@ class ControllerGame extends Controller {
         }
     }
 
-    public function CreateSituation()
+    public function createSituation()
     {
-        $types = array(
+    	$types = array(
             "1" => "Début",
             "2" => "Fin",
             "3" => "Combat",
@@ -110,6 +122,40 @@ class ControllerGame extends Controller {
 
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse));
+    }
+    
+    public function createSituations()
+    {
+    	//récupérer les données du form
+    	$this->situationType = $this->request->getParameter("type");
+    	$this->situationTitle = $this->request->getParameter("situationTitle");
+    	$this->situationExposition = $this->request->getParameter("situationExposition");
+    	$this->situationQuestion = $this->request->getParameter("situationQuestion");
+    	$this->situationReponse1 = $this->request->getParameter("situationReponse1");
+    	$this->situationNbPoint1 = $this->request->getParameter("situationNbPoint1");
+    	$this->situationReponse2 = $this->request->getParameter("situationReponse2");
+    	$this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2");
+    	$this->situationReponse3 = $this->request->getParameter("situationReponse3");
+    	$this->situationNbPoint3 = $this->request->getParameter("situationNbPoint3");
+    	
+    	//echo($this->situationTitle.", ".$this->situationExposition.", ".$this->situationQuestion.", ".$this->situationReponse1.", ".$this->situationNbPoint1.", ".$this->situationReponse2.", ".$this->situationNbPoint2.", ".$this->situationReponse3.", ".$this->situationNbPoint3);
+    	if($this->situationType && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null && $this->situationReponse1!=null && $this->situationNbPoint1!=null)
+    	{
+    		$login = $_SESSION["login"];
+    		$rootDirectory = "Content/xml/Members/".$login;
+    		//$fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
+    		$fileGameDirectory = $rootDirectory . "/Star Wars";
+    		
+    		echo($fileGameDirectory);
+    		
+    		//get game file name
+    		$gameFile = scandir($fileGameDirectory,1);
+    		
+    		$arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->situationReponse3, $this->situationNbPoint3);
+		
+    		//add situation to the gameFile
+    		$this->modelGame->addSituationInGameFile($gameFile[0], $arrayForm);
+    	}
     }
 
     public function viewGame()

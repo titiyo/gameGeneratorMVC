@@ -56,7 +56,7 @@ o	List De choix (Nombre Max à définir ou illimité ?)
     }
 </script>
 
-<form name="createSituation" method="post" action="game/createSituatio">
+<form name="createSituation" method="post" action="game/createSituations">
     <label>Veuillez choisir le type de situation que vous voulez créer :</label>
     <select name="type" onchange="typeForm(this.value);">
         <?php foreach($types as $t):  ?>
@@ -65,21 +65,21 @@ o	List De choix (Nombre Max à définir ou illimité ?)
     </select> <br/>
 
     <label>Titre : </label>
-    <input type="text" name="title"/> <br/>
+    <input type="text" name="situationTitle"/> <br/>
 
     <label>Exposition : </label>
-    <textarea name="exposition" rows="4" cols="50" ></textarea>
+    <textarea name="situationExposition" rows="4" cols="50" ></textarea>
     <br/>
 
     <label>Question : </label>
-    <input type="text" name="question"/><br/>
+    <input type="text" name="situationQuestion"/><br/>
 
     <div id="response">
         <?php for($i = 0; $i < $maxResponse; $i++):?>
             <label>Réponse <?=$i?> : </label>
-            <input type="text" name="reponse<?=$i?>"/>
+            <input type="text" name="situationReponse<?=$i?>"/>
             <label>Nbr points : </label>
-            <input type="text" name="nbPoint<?=$i?>"/><br/>
+            <input type="text" name="situationNbPoint<?=$i?>"/><br/>
         <?php endfor; ?>
     </div>
     <input type="submit" name="createSituation" value="OK"/>

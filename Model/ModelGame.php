@@ -123,4 +123,47 @@ XML;
         }
         return $detailTab;
     }
+    
+    public function addSituationInGameFile($UserGameFile, $arrayForm)
+    {
+    	//$xml = simplexml_load_file($UserGameFile);
+    	$xml = simplexml_load_file("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
+    	
+    	$situation = $xml->addChild("situation");
+    	$situation->addAttribute("type",$arrayForm[0]);
+    	$situation->addChild("situationCode", uniqid());
+    	$situation->addChild("situationTitle",$arrayForm[1]);
+    	$situation->addChild("situationExposition",$arrayForm[2]);
+    	$question = $situation->addChild("question");
+    	$question->addChild("label", $arrayForm[3]);
+    	$choix = $question->addChild("choix");
+    	$rep = $choix->addChild("rep",$arrayForm[4]);
+    	$rep->addAttribute("val", "1");
+    	
+    	$rep = $choix->addChild("rep",$arrayForm[6]);
+    	$rep->addAttribute("val", "2");
+    	
+    	$rep = $choix->addChild("rep",$arrayForm[8]);
+    	$rep->addAttribute("val","3");
+    	
+    	$suivant = $question->addChild("suivant");
+    	$si = $suivant->addChild("si");
+    	$test = $si->addChild("test");
+    	$test->addAttribute("val","1");
+    	$points = $test->addChild("points", $arrayForm[5]);
+    	$code = $test->addChild("code", "0");
+    	
+    	$test = $si->addChild("test");
+    	$test->addAttribute("val","2");
+    	$points = $test->addChild("points", $arrayForm[7]);
+    	$code = $test->addChild("code", "0");
+    	
+    	$test = $si->addChild("test");
+    	$test->addAttribute("val","3");
+    	$points = $test->addChild("points", $arrayForm[9]);
+    	$code = $test->addChild("code", "0");
+    	
+    	//$xml->asXml($UserGameFile);
+    	$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
+    }
 }
