@@ -146,8 +146,6 @@ class ControllerGame extends Controller {
     		//$fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
     		$fileGameDirectory = $rootDirectory . "/Star Wars";
     		
-    		echo($fileGameDirectory);
-    		
     		//get game file name
     		$gameFile = scandir($fileGameDirectory,1);
     		
@@ -156,6 +154,7 @@ class ControllerGame extends Controller {
     		//add situation to the gameFile
     		$this->modelGame->addSituationInGameFile($gameFile[0], $arrayForm);
     	}
+    	$this->executeAction("Index");
     }
 
     public function viewGame()
