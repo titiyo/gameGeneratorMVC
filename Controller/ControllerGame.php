@@ -27,6 +27,8 @@ class ControllerGame extends Controller {
     private $situationNbPoint2;
     private $situationReponse3;
     private $situationNbPoint3;
+    private $winPoint;
+    private $loosePoint;
     
     /**
      * Constructeur
@@ -139,7 +141,11 @@ class ControllerGame extends Controller {
     	$this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2");
     	$this->situationReponse3 = $this->request->getParameter("situationReponse3");
     	$this->situationNbPoint3 = $this->request->getParameter("situationNbPoint3");
-        $this->gameTitle = $this->request->getParameter("gameTitle");
+
+    	$this->winPoint = $this->request->getParameter("winPoint");
+    	$this->loosePoint = $this->request->getParameter("loosePoint");
+    	    	
+    	$this->gameTitle = $this->request->getParameter("gameTitle");
 
         echo($this->gameTitle);
     	
@@ -154,7 +160,7 @@ class ControllerGame extends Controller {
     		//get game file name
     		$gameFile = scandir($fileGameDirectory,1);
     		
-    		$arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->situationReponse3, $this->situationNbPoint3);
+    		$arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->situationReponse3, $this->situationNbPoint3, $this->winPoint, $this->loosePoint);
 		
     		//add situation to the gameFile
     		$this->modelGame->addSituationInGameFile($fileGameDirectory.$gameFile[0], $arrayForm);

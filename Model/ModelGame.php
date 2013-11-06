@@ -134,6 +134,12 @@ XML;
     	$situation->addChild("situationCode", uniqid());
     	$situation->addChild("situationTitle",$arrayForm[1]);
     	$situation->addChild("situationExposition",$arrayForm[2]);
+    	
+    	if($arrayForm[0]=="Combat")
+    	{
+    		$situation->addChild("ennemi",0);
+    	}
+    	
     	$question = $situation->addChild("question");
     	$question->addChild("label", $arrayForm[3]);
     	$choix = $question->addChild("choix");
@@ -150,18 +156,39 @@ XML;
     	$si = $suivant->addChild("si");
     	$test = $si->addChild("test");
     	$test->addAttribute("val","1");
-    	$points = $test->addChild("points", $arrayForm[5]);
-    	$code = $test->addChild("code", "0");
     	
-    	$test = $si->addChild("test");
-    	$test->addAttribute("val","2");
-    	$points = $test->addChild("points", $arrayForm[7]);
-    	$code = $test->addChild("code", "0");
+    	if($arrayForm[0]=="Combat")
+    	{
+    		$si = $test->addChild("si");
+    		$test = $si->addChild("test");
+    		$test->addAttribute("vieEnnemi","0");
+    		$test->addChild("code", "0");
+    		$test->addChild("pointsVictoire", $arrayForm[10]);
+    		$test = $si->addChild("test");
+    		$test->addAttribute("vieHeros","0");
+    		$test->addChild("code", "0");
+    		$test->addChild("pointsDefaite", $arrayForm[11]);
+    		$test = $si->addChild("test");
+    		$test->addChild("code", "0");
+    	}
+    	else
+    	{
+    		$points = $test->addChild("points", $arrayForm[5]);
+    		$code = $test->addChild("code", "0");
+    		$test = $si->addChild("test");
+    		$test->addAttribute("val","2");
+    		$points = $test->addChild("points", $arrayForm[7]);
+    		$code = $test->addChild("code", "0");
+    		 
+    		$test = $si->addChild("test");
+    		$test->addAttribute("val","3");
+    		$points = $test->addChild("points", $arrayForm[9]);
+    		$code = $test->addChild("code", "0");
+    	}
     	
-    	$test = $si->addChild("test");
-    	$test->addAttribute("val","3");
-    	$points = $test->addChild("points", $arrayForm[9]);
-    	$code = $test->addChild("code", "0");
+    	
+    	
+    	
     	
     	$xml->asXml($UserGameFile);
     	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");

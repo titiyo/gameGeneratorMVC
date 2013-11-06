@@ -41,6 +41,10 @@ class Request {
         if ($this->existParameter($name)) {
             return $this->parameters[$name];
         }
+        elseif($name=="winPoint"||$name="loosePoint")
+        {
+        	return null;
+        }
         else {
             throw new Exception("Paramètre '$name' absent de la requête");
         }
