@@ -126,8 +126,8 @@ XML;
     
     public function addSituationInGameFile($UserGameFile, $arrayForm)
     {
-    	//$xml = simplexml_load_file($UserGameFile);
-    	$xml = simplexml_load_file("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
+    	$xml = simplexml_load_file($UserGameFile);
+    	//$xml = simplexml_load_file("Content/xml/Members/jbreton/'/fileGame_jbreton_05112013.xml");
     	
     	$situation = $xml->addChild("situation");
     	$situation->addAttribute("type",$arrayForm[0]);

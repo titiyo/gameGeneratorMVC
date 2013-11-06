@@ -82,5 +82,6 @@ o	List De choix (Nombre Max à définir ou illimité ?)
             <input type="text" name="situationNbPoint<?=$i?>"/><br/>
         <?php endfor; ?>
     </div>
+    <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
     <input type="submit" name="createSituation" value="OK"/>
 </form>

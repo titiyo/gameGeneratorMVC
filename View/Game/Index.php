@@ -8,6 +8,6 @@
     </div>
     <div>
         <h2>Situation(s)</h2>
-        <input type="button" value="Créer une situation" onclick="location.href='Game/CreateSituation'">
+        <input type="button" value="Créer une situation" onclick="location.href='Game/CreateSituation/<?=$gameTitle?>'">
     </div>
 </div>

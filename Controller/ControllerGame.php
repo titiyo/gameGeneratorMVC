@@ -111,6 +111,8 @@ class ControllerGame extends Controller {
 
     public function createSituation()
     {
+        $this->gameTitle = $this->request->getParameter("id");
+
     	$types = array(
             "1" => "Début",
             "2" => "Fin",
@@ -121,7 +123,7 @@ class ControllerGame extends Controller {
         $maxResponse = 4;
 
         // Return the form with data
-        $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse));
+        $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle));
     }
     
     public function createSituations()
@@ -137,6 +139,9 @@ class ControllerGame extends Controller {
     	$this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2");
     	$this->situationReponse3 = $this->request->getParameter("situationReponse3");
     	$this->situationNbPoint3 = $this->request->getParameter("situationNbPoint3");
+        $this->gameTitle = $this->request->getParameter("gameTitle");
+
+        echo($this->gameTitle);
     	
     	//echo($this->situationTitle.", ".$this->situationExposition.", ".$this->situationQuestion.", ".$this->situationReponse1.", ".$this->situationNbPoint1.", ".$this->situationReponse2.", ".$this->situationNbPoint2.", ".$this->situationReponse3.", ".$this->situationNbPoint3);
     	if($this->situationType && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null && $this->situationReponse1!=null && $this->situationNbPoint1!=null)
@@ -144,7 +149,7 @@ class ControllerGame extends Controller {
     		$login = $_SESSION["login"];
     		$rootDirectory = "Content/xml/Members/".$login;
     		//$fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
-    		$fileGameDirectory = $rootDirectory . "/Star Wars";
+    		$fileGameDirectory = $rootDirectory . "/" . $this->gameTitle;
     		
     		//get game file name
     		$gameFile = scandir($fileGameDirectory,1);
