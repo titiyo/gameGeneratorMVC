@@ -149,7 +149,7 @@ class ControllerGame extends Controller {
     		$login = $_SESSION["login"];
     		$rootDirectory = "Content/xml/Members/".$login;
     		//$fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
-    		$fileGameDirectory = $rootDirectory . "/" . $this->gameTitle;
+    		$fileGameDirectory = $rootDirectory . "/" . $this->gameTitle. "/";
     		
     		//get game file name
     		$gameFile = scandir($fileGameDirectory,1);
@@ -157,7 +157,7 @@ class ControllerGame extends Controller {
     		$arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->situationReponse3, $this->situationNbPoint3);
 		
     		//add situation to the gameFile
-    		$this->modelGame->addSituationInGameFile($gameFile[0], $arrayForm);
+    		$this->modelGame->addSituationInGameFile($fileGameDirectory.$gameFile[0], $arrayForm);
     	}
     	$this->executeAction("Index");
     }

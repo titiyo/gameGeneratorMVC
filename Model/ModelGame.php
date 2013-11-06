@@ -163,7 +163,7 @@ XML;
     	$points = $test->addChild("points", $arrayForm[9]);
     	$code = $test->addChild("code", "0");
     	
-    	//$xml->asXml($UserGameFile);
-    	$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
+    	$xml->asXml($UserGameFile);
+    	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
     }
 }
