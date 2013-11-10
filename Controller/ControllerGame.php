@@ -153,7 +153,7 @@ class ControllerGame extends Controller {
 
         $situation = array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
 
-        $maxResponse = 4;
+        $maxResponse = 3;
 
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate
@@ -224,11 +224,11 @@ class ControllerGame extends Controller {
             "4" => "Narration"
         );
 
-        $maxResponse = 4;
+        $maxResponse = 3;
 
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate,
-                                  'situation' => $situation));
+                                  'situation' => $situation, 'idSituation' => $this->idSituation));
     }
 
     public function editSituations()
@@ -238,38 +238,40 @@ class ControllerGame extends Controller {
         $this->situationTitle = $this->request->getParameter("situationTitle");
         $this->situationExposition = $this->request->getParameter("situationExposition");
         $this->situationQuestion = $this->request->getParameter("situationQuestion");
+        $this->situationReponse0 = $this->request->getParameter("situationReponse0");
+        $this->situationNbPoint0 = $this->request->getParameter("situationNbPoint0");
+        echo($this->situationReponse0." / ".$this->situationNbPoint0."<br/>");
         $this->situationReponse1 = $this->request->getParameter("situationReponse1");
         $this->situationNbPoint1 = $this->request->getParameter("situationNbPoint1");
+        echo($this->situationReponse1." / ".$this->situationNbPoint1."<br/>");
         $this->situationReponse2 = $this->request->getParameter("situationReponse2");
         $this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2");
-        $this->situationReponse3 = $this->request->getParameter("situationReponse3");
-        $this->situationNbPoint3 = $this->request->getParameter("situationNbPoint3");
+        echo($this->situationReponse2." / ".$this->situationNbPoint2."<br/>");
 
         $this->winPoint = $this->request->getParameter("winPoint");
         $this->loosePoint = $this->request->getParameter("loosePoint");
 
         $this->gameTitle = $this->request->getParameter("gameTitle");
         $this->createDate = $this->request->getParameter("createDate");
+        $this->idSituation = $this->request->getParameter("idSituation");
 
         if($this->situationType && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null && $this->situationReponse1!=null && $this->situationNbPoint1!=null)
         {
             $login = $_SESSION["login"];
             $rootDirectory = "Content/xml/Members/".$login;
             $fileGameDirectory = $rootDirectory . "/" . $this->gameTitle. "/";
-            //get game file name
             $gameFile = $fileGameDirectory."fileGame_".$login."_".$this->createDate.".xml";
 
-            $arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->situationReponse3, $this->situationNbPoint3, $this->winPoint, $this->loosePoint);
+            $arrayForm = array("type" => $this->situationType, "title" => $this->situationTitle, "exposition" => $this->situationExposition,
+                "question" => $this->situationQuestion, "answer0" => $this->situationReponse1, "nbPoint0" => $this->situationNbPoint1,
+                "answer1" => $this->situationReponse2, "nbPoint1" => $this->situationNbPoint2, "answer2" => $this->situationReponse3,
+                "nbPoint2" => $this->situationNbPoint3, "winPoint" => $this->winPoint, "loosePoint" => $this->loosePoint);
 
             //add situation to the gameFile
-            $this->modelGame->addSituationInGameFile($gameFile, $arrayForm);
-
-            //Update metadata Number Of Situation
-            $this->modelGame->UpdateNumberOfSituation($gameFile);
+            $this->modelGame->editSituationInGameFile($gameFile, $arrayForm, $this->idSituation);
         }
         $this->executeAction("Index");
     }
-
 
     public function viewGame()
     {
