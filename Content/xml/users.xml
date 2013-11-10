@@ -1,16 +1,17 @@
 <?xml version="1.0" standalone="yes"?>
 <users>
-	<user group="member">
-		<login>c.barreto</login>
-		<pwd>test</pwd>
-	</user>
-	<user group="admin">
-		<login>y.bondeau</login>
-		<pwd>test</pwd>
-	</user>
-	<user group="member">
-		<login>jbreton</login>
-		<pwd>test</pwd>
-	</user>
     <user group="member">
-        <lname>toto</lname><fname>titi</fname><login>toto.titi</login><pwd>test</pwd><mail>toto.titi@gmail.com</mail></user><user group="member"><lname>abcd</lname><fname>efgh</fname><login>abcd.efgh</login><pwd>test</pwd><mail>abcd.efgh@gmail.com</mail></user></users>
+        <lname>Christophe</lname>
+        <fname>Barreto</fname>
+        <login>christophe.barreto</login>
+        <pwd>test</pwd>
+        <mail>barreto.christophe@gmail.com</mail>
+    </user>
+    <user group="member">
+        <lname>Dupont</lname>
+        <fname>Jean</fname>
+        <login>dupont.jean</login>
+        <pwd>test</pwd>
+        <mail>dupont.jean@gmail.com</mail>
+    </user>
+</users>

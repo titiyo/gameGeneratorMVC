@@ -75,6 +75,7 @@ XML;
         $dir = "Content/xml/members/";
         $root = scandir($dir,1);
         $foundDir=false;
+        $games = array();
         foreach($root as $value)
         {
             if($login==$value)
@@ -86,12 +87,10 @@ XML;
         if($foundDir)
         {
             $gameFileXml = simplexml_load_file($dir.$login."/userGames.xml");
-            $games = array();
 
             foreach($gameFileXml->jeu as $item)
             {
-                $game = array("title" => $item,
-                              "gameDetail" => $this->gameDetails($item));
+                $game = array("title" => $item, "gameDetail" => $this->gameDetails($item));
                 array_push($games, $game);
             }
         }

@@ -275,4 +275,9 @@ class ControllerGame extends Controller {
     {
         $this->generateView(array('games' => $this->modelGame->getGameList($_SESSION["login"])));
     }
+
+    public function createCharacter()
+    {
+        $this->generateView();
+    }
 }
