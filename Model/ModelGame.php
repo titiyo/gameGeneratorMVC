@@ -177,6 +177,7 @@ XML;
 
         foreach($game->situation as $item)
         {
+        	print_r($item);
             if($item->situationCode == $idSituation)
             {
                 $item["type"] = $arrayForm["type"];
@@ -184,9 +185,10 @@ XML;
                 $item->situationExposition = $arrayForm["exposition"];
                 $item->question->label =  $arrayForm["question"];
 
-                for($i=1; $i < count($item->question->suivant->si->test); $i++)
+                for($i=0; $i < count($item->question->suivant->si->test); $i++)
                 {
-                    $item->question->suivant->si->test[$i] = $arrayForm["answer".$i];
+                    //$item->question->suivant->si->test[$i] = $arrayForm["answer".$i];
+                	$item->question->choix->rep[$i] = $arrayForm["answer".$i];
                 }
 
                 if($arrayForm["type"]=="Combat")
@@ -196,7 +198,8 @@ XML;
                 }
                 else
                 {
-                    for($i=1; $i < count($item->question->suivant->si->test); $i++)
+                	//reprendre ici
+                    for($i=0; $i < count($item->question->suivant->si->test); $i++)
                     {
                         $item->question->suivant->si->test[$i]->points = $arrayForm["nbPoint".$i];
                     }
@@ -211,6 +214,8 @@ XML;
 
     public function addSituationInGameFile($UserGameFile, $arrayForm)
     {
+    	
+    	
     	$xml = simplexml_load_file($UserGameFile);
 
     	$situation = $xml->addChild("situation");
