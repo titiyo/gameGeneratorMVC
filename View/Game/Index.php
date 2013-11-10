@@ -12,7 +12,9 @@
             <ul>
                 <?php foreach($situations as $item):?>
                     <li>
-                        <a href="">(<i><?=$item["type"]?></i>)  <?=$item["title"]?></a>
+                        <a href="Game/EditSituation?gameTitle=<?=$gameTitle?>&createDate=<?=$createDate?>&idSituation=<?=$item["idSituation"]?>">
+                            (<i><?=$item["type"]?></i>)  <?=$item["title"]?>
+                        </a>
                     </li>
                 <?php endforeach;?>
             </ul>

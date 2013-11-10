@@ -70,9 +70,6 @@ XML;
         $xml->asXml($fileName);
      }
 
-    /*
-    * @param $login
-    */
     public function getGameList($login)
     {
         $dir = "Content/xml/members/";
@@ -109,7 +106,7 @@ XML;
 
         foreach($game->situation as $item)
         {
-            $situation = array("type" => $item["type"], "title" => $item->situationTitle, "code" => $item->situationCode);
+            $situation = array("type" => $item["type"], "title" => $item->situationTitle, "idSituation" => $item->situationCode);
             array_push($situations, $situation);
         }
         return $situations;
@@ -136,6 +133,34 @@ XML;
             }
         }
         return null;
+    }
+
+    public function situationDetails($gameFilePath, $idSituation)
+    {
+        $game = simplexml_load_file($gameFilePath);
+
+        foreach($game->situation as $item)
+        {
+
+            if($item->situationCode == $idSituation)
+            {
+                $answer = array();
+                foreach($item->question->choix->rep as $a)
+                {
+                    array_push($answer, $a);
+                }
+
+                $points = array();
+                foreach($item->question->suivant->si->test as $b)
+                {
+                    array_push($points, $b->points);
+                }
+
+                return array("type" => $item["type"], "title" => $item->situationTitle, "code" => $item->situationCode, "exposition" => $item->situationExposition
+                    , "question" => $item->question->label, "answers" => $answer, "points" => $points);
+            }
+        }
+        return array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
     }
 
     public function UpdateNumberOfSituation($UserGameFile)

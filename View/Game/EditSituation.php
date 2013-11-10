@@ -57,8 +57,8 @@ o	List De choix (Nombre Max à définir ou illimité ?)
 </script>
 
 <div class="hero-unit">
-    <form name="createSituation" method="post" action="game/createSituations">
+    <form name="editSituation" method="post" action="game/editSituations">
         <?php include("_CreateOrEditSituation.php");  ?>
-        <input type="submit" name="createSituation" value="Submit"/>
+        <input type="submit" name="editSituation" value="Submit"/>
     </form>
 </div>
