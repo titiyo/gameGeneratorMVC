@@ -83,5 +83,6 @@ o	List De choix (Nombre Max à définir ou illimité ?)
         <?php endfor; ?>
     </div>
     <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
-    <input type="submit" name="createSituation" value="OK"/>
+    <input type="hidden" name="createDate" value="<?=$createDate?>" />
+    <input type="submit" name="createSituation" value="Submit"/>
 </form>

@@ -1,2 +1,4 @@
 .idea
 /*.iml
+/Config/dev.ini
+/Config/prod.ini

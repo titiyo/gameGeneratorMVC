@@ -11,10 +11,10 @@ require_once 'Model/ModelGame.php';
 
 class ControllerGame extends Controller {
 
+    private $createDate;
     private $modelGame;
     private $gameTitle;
     private $description;
-    private $owner;
     private $difficulty;
     
     private $situationType;
@@ -41,31 +41,60 @@ class ControllerGame extends Controller {
      *  Controleur par défaut
      */
     public function index() {
-        $this->generateView(array('gameTitle' => $this->gameTitle));
+        $situations = null;
+
+        if($this->request->existParameter("gameTitle"))
+        {
+            $this->gameTitle = $this->request->getParameter("gameTitle");
+        }
+        if($this->request->existParameter("createDate"))
+        {
+            $this->createDate = $this->request->getParameter("createDate");
+        }
+        if($this->gameTitle != null && $this->createDate != null)
+        {
+            $gameFilePath = "Content/xml/members/".$_SESSION["login"]."/".$this->gameTitle."/fileGame_".$_SESSION["login"]."_".$this->createDate.".xml";
+
+            if(file_exists($gameFilePath))
+            {
+                // Get all Caracters
+
+                // Get all Situations
+                $situations = $this->modelGame->getAllSituations($gameFilePath);
+            }
+        }
+
+        $this->generateView(array('gameTitle' => $this->gameTitle,'createDate' => $this->createDate, 'situations' => $situations));
     }
 
     public function createGame()
     {
+        $difficultyList = array(
+            "1" => "*",
+            "2" => "**",
+            "3" => "***",
+            "4" => "****",
+            "5" => "*****"
+        );
+
         // Return the form with empty data
-        $this->generateView(array('gameTitle' => null, 'description' => null,
-            'owner' => null, 'difficulty' => null));
+        $this->generateView(array('gameTitle' => null, 'description' => null, 'difficultyList' => $difficultyList));
     }
 
     public function createGameFile()
     {
         $this->gameTitle = $this->request->getParameter("gameTitle");
         $this->description = $this->request->getParameter("description");
-        $this->owner = $this->request->getParameter("owner");
         $this->difficulty = $this->request->getParameter("difficulty");
 
-        if($this->gameTitle != null && $this->description != null && $this->owner != null && $this->difficulty != null)
+        if($this->gameTitle != null && $this->description != null && $this->difficulty != null)
         {
             /***************************************************************************
             *                    Create File Game
             **************************************************************************/
             $login = $_SESSION["login"];
             setlocale(LC_TIME, 'fra_fra');
-            $createDate = strftime('%d%m%Y');
+            $this->createDate = strftime('%d%m%Y');
             $id = uniqid();
 
             $rootDirectory = "Content/xml/Members/".$login;
@@ -85,7 +114,7 @@ class ControllerGame extends Controller {
             }
 
             // Create the game
-            $this->modelGame->createFileGame($fileGameDirectory, $id, $createDate, $this->gameTitle ,$this->description, $this->owner, $this->difficulty, $login);
+            $this->modelGame->createFileGame($fileGameDirectory, $id, $this->createDate, $this->gameTitle ,$this->description, $this->difficulty, $login);
 
             /***************************************************************************
              *                    Create User Games
@@ -105,15 +134,14 @@ class ControllerGame extends Controller {
         }
         else
         {
-            // Return the form with data
-            $this->generateView(array('gameTitle' => $this->gameTitle, 'description' => $this->description,
-                                'owner' => $this->owner, 'difficulty' => $this->difficulty));
+            $this->executeAction("createGame");
         }
     }
 
     public function createSituation()
     {
-        $this->gameTitle = $this->request->getParameter("id");
+        $this->gameTitle = $this->request->getParameter("gameTitle");
+        $this->createDate = $this->request->getParameter("createDate");
 
     	$types = array(
             "1" => "Début",
@@ -125,7 +153,7 @@ class ControllerGame extends Controller {
         $maxResponse = 4;
 
         // Return the form with data
-        $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle));
+        $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate));
     }
     
     public function createSituations()
@@ -146,53 +174,29 @@ class ControllerGame extends Controller {
     	$this->loosePoint = $this->request->getParameter("loosePoint");
     	    	
     	$this->gameTitle = $this->request->getParameter("gameTitle");
+        $this->createDate = $this->request->getParameter("createDate");
 
-        echo($this->gameTitle);
-    	
-    	//echo($this->situationTitle.", ".$this->situationExposition.", ".$this->situationQuestion.", ".$this->situationReponse1.", ".$this->situationNbPoint1.", ".$this->situationReponse2.", ".$this->situationNbPoint2.", ".$this->situationReponse3.", ".$this->situationNbPoint3);
     	if($this->situationType && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null && $this->situationReponse1!=null && $this->situationNbPoint1!=null)
     	{
     		$login = $_SESSION["login"];
     		$rootDirectory = "Content/xml/Members/".$login;
-    		//$fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
     		$fileGameDirectory = $rootDirectory . "/" . $this->gameTitle. "/";
-    		
     		//get game file name
-    		$gameFile = scandir($fileGameDirectory,1);
+    		$gameFile = $fileGameDirectory."fileGame_".$login."_".$this->createDate.".xml";
     		
     		$arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->situationReponse3, $this->situationNbPoint3, $this->winPoint, $this->loosePoint);
 		
     		//add situation to the gameFile
-    		$this->modelGame->addSituationInGameFile($fileGameDirectory.$gameFile[0], $arrayForm);
+    		$this->modelGame->addSituationInGameFile($gameFile, $arrayForm);
+
+            //Update metadata Number Of Situation
+            $this->modelGame->UpdateNumberOfSituation($gameFile);
     	}
     	$this->executeAction("Index");
     }
 
     public function viewGame()
     {
-        $gameTab=$this->modelGame->getGameList($_SESSION["login"]);
-        $gameList='<div class="accordion" id="accordion2">';
-        for($i=1;$i<=sizeof($gameTab);$i++)
-        {
-            $detailsGame = $this->modelGame->gameDetails($gameTab[($i-1)]);
-            $gameList .='<div class="accordion-group">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#game'.$i.'">Jeux N°'.$i.' : '.$gameTab[($i-1)].'</a>
-                            </div>
-                            <div id="game'.$i.'" class="accordion-body collapse">
-                                <div class="accordion-inner">
-                                    <label style="font-weight:bold;">Titre du jeu : </label>'.$detailsGame["jeu"]["titre"].'<br>
-                                    <label style="font-weight:bold;">Créateur : </label>'.$detailsGame["jeu"]["createur"].'<br>
-                                    <label style="font-weight:bold;">Date de création : </label>'.$detailsGame["jeu"]["datecreation"].'<br>
-                                    <label style="font-weight:bold;">Description du jeu : </label>'.$detailsGame["jeu"]["description"].'<br>
-                                    <label style="font-weight:bold;">Difficulté du jeu : </label>'.$detailsGame["jeu"]["difficulte"].'<br>
-                                    <label style="font-weight:bold;">Nombre de situation(s) : </label>'.$detailsGame["jeu"]["nbsituation"].'<br>
-                                </div>
-                            </div>
-                        </div>';
-        }
-        $gameList .='</div>';
-
-        $this->generateView(array('gameList' => $gameList));
+        $this->generateView(array('games' => $this->modelGame->getGameList($_SESSION["login"])));
     }
 }

@@ -46,11 +46,10 @@ XML;
      * @param $createDate
      * @param $gameTitle
      * @param $description
-     * @param $owner
      * @param $difficulty
      * @param $login
      */
-    public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $owner, $difficulty, $login)
+    public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $difficulty, $login)
     {
 $stringxml = <<<XML
 <?xml version='1.0'?>
@@ -59,7 +58,7 @@ $stringxml = <<<XML
     <datecreation>$createDate</datecreation>
     <nbsituation>0</nbsituation>
     <titre>$gameTitle</titre>
-    <createur>$owner</createur>
+    <createur>$login</createur>
     <description>$description</description>
     <difficulte>$difficulty</difficulte>
 </jeu>
@@ -90,14 +89,30 @@ XML;
         if($foundDir)
         {
             $gameFileXml = simplexml_load_file($dir.$login."/userGames.xml");
-            $i=0;
-            foreach($gameFileXml->jeu as $game)
+            $games = array();
+
+            foreach($gameFileXml->jeu as $item)
             {
-                $gameList[$i]=$game;
-                $i++;
+                $game = array("title" => $item,
+                              "gameDetail" => $this->gameDetails($item));
+                array_push($games, $game);
             }
         }
-        return $gameList;
+        //print_r($games);
+        return $games;
+    }
+
+    public function getAllSituations($gameFilePath)
+    {
+        $game = simplexml_load_file($gameFilePath);
+        $situations = array();
+
+        foreach($game->situation as $item)
+        {
+            $situation = array("type" => $item["type"], "title" => $item->situationTitle, "code" => $item->situationCode);
+            array_push($situations, $situation);
+        }
+        return $situations;
     }
 
     public function gameDetails($nameGame)
@@ -111,24 +126,31 @@ XML;
             if($value!="." && $value!="..")
             {
                 $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
-                //echo "Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value."<br>";
-                $detailTab["jeu"]=array("datecreation"=> $detailGame->datecreation,
-                    "titre"=>$detailGame->titre,
-                    "createur"=>$detailGame->createur,
-                    "nbsituation"=>$detailGame->nbsituation,
+
+                return array("creationDate"=> $detailGame->datecreation,
+                    "title"=>$detailGame->titre,
+                    "creator"=>$detailGame->createur,
+                    "nbSituation"=>$detailGame->nbsituation,
                     "description"=>$detailGame->description,
-                    "difficulte"=>$detailGame->difficulte);
-                break;
+                    "difficulty"=>$detailGame->difficulte);
             }
         }
-        return $detailTab;
+        return null;
     }
-    
+
+    public function UpdateNumberOfSituation($UserGameFile)
+    {
+        $game = simplexml_load_file($UserGameFile);
+
+        $game->nbsituation++;
+
+        $game->asXml($UserGameFile);
+    }
+
     public function addSituationInGameFile($UserGameFile, $arrayForm)
     {
     	$xml = simplexml_load_file($UserGameFile);
-    	//$xml = simplexml_load_file("Content/xml/Members/jbreton/'/fileGame_jbreton_05112013.xml");
-    	
+
     	$situation = $xml->addChild("situation");
     	$situation->addAttribute("type",$arrayForm[0]);
     	$situation->addChild("situationCode", uniqid());
@@ -185,11 +207,7 @@ XML;
     		$points = $test->addChild("points", $arrayForm[9]);
     		$code = $test->addChild("code", "0");
     	}
-    	
-    	
-    	
-    	
-    	
+
     	$xml->asXml($UserGameFile);
     	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
     }
