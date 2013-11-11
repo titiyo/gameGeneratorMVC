@@ -58,6 +58,8 @@ class ControllerGame extends Controller {
             $charFilePath = "Content/xml/members/".$_SESSION["login"]."/".$this->gameTitle."/".$this->gameTitle."Characters.xml";
             if(file_exists($gameFilePath))
             {
+                // Get all Caracters
+
                 // Get all Situations
                 $situations = $this->modelGame->getAllSituations($gameFilePath);
             }

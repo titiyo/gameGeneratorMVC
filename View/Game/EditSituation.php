@@ -23,8 +23,6 @@ o	List De choix (Nombre Max à définir ou illimité ?)
             winInput.setAttribute("type","text");
             winInput.setAttribute("name","winPoint");
 
-            var br = document.createElement("br");
-
             var looseLabel = document.createElement("label");
             looseLabel.innerHTML = "Point en cas de défaite :";
 
@@ -32,25 +30,29 @@ o	List De choix (Nombre Max à définir ou illimité ?)
             looseInput.setAttribute("type","text");
             looseInput.setAttribute("name","loosePoint");
 
-            var combatElements = document.createElement("div");
-            combatElements.setAttribute("id","combatElements")
-            combatElements.appendChild(br);
-            combatElements.appendChild(winLabel);
-            combatElements.appendChild(winInput);
-            combatElements.appendChild(br);
-            combatElements.appendChild(looseLabel);
-            combatElements.appendChild(looseInput);
+            var trWin = document.createElement("tr");
+            trWin.setAttribute("class","combatElements");
+            var trLoose = document.createElement("tr");
+            trLoose.setAttribute("class","combatElements");
 
-            var form = document.getElementById("response");
-            form.appendChild(combatElements);
+            var winTD = document.createElement("td");
+            winTD.appendChild(winLabel);
+            winTD.appendChild(winInput);
+
+            var looseTD = document.createElement("td");
+            looseTD.appendChild(looseLabel);
+            looseTD.appendChild(looseInput);
+
+            var form = $("#tabSituation tbody")[0];
+
+            form.appendChild(trWin).appendChild(winTD);
+            form.appendChild(trLoose).appendChild(looseTD);
         }
         else
         {
-            var form = document.getElementById("response");
-            var combatElements = document.getElementById("combatElements");
-            if(combatElements != null)
+            for(var i = 0; i <= $(".combatElements").length; i++)
             {
-                form.removeChild(combatElements);
+                $("#tabSituation tbody")[0].removeChild($(".combatElements")[0]);
             }
         }
     }
@@ -59,6 +61,7 @@ o	List De choix (Nombre Max à définir ou illimité ?)
 <div class="hero-unit">
     <form name="editSituation" method="post" action="game/editSituations">
         <?php include("_CreateOrEditSituation.php");  ?>
+        <input type="hidden" name="idSituation" value="<?= $idSituation ?>"/>
         <input type="submit" name="editSituation" value="Submit"/>
     </form>
 </div>
