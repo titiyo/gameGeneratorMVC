@@ -51,7 +51,7 @@ XML;
      */
     public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $difficulty, $login)
     {
-$stringxml = <<<XML
+        $stringxml = <<<XML
 <?xml version='1.0'?>
 <jeu>
     <id>$id</id>
@@ -68,8 +68,30 @@ XML;
 
         $fileName = $fileGameDirectory."/fileGame_".$login."_".$createDate.".xml";
         $xml->asXml($fileName);
-     }
+    }
 
+    public function createFileCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $escPoint)
+    {
+        $stringxml = <<<XML
+<?xml version='1.0'?>
+<personnages>
+    <personnage type="$charType">
+        <nom>$charName</nom>
+        <caracteristiques>
+            <vie>$lifePoint</vie>
+            <defense>$defPoint</defense>
+            <attaque>$atkPoint</attaque>
+            <initiative>$escPoint</initiative>
+        </caracteristiques>
+    </personnage>
+</personnages>
+XML;
+
+        $xml = simplexml_load_string($stringxml);
+
+        $fileName = $gameDir."/".$gameTitle."Characters.xml";
+        $xml->asXml($fileName);
+    }
     public function getGameList($login)
     {
         $dir = "Content/xml/members/";
@@ -122,7 +144,7 @@ XML;
             if($value!="." && $value!="..")
             {
                 $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
-
+                echo $detailGame;
                 return array("creationDate"=> $detailGame->datecreation,
                     "title"=>$detailGame->titre,
                     "creator"=>$detailGame->createur,
@@ -234,5 +256,25 @@ XML;
 
     	$xml->asXml($UserGameFile);
     	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
+    }
+
+    function createNewCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $escPoint)
+    {
+        $xmlFile = simplexml_load_file($gameDir.$gameTitle."Characters.xml");
+        $character = $xmlFile->addChild('personnage');
+        $character->addAttribute('type', $charType);
+        $character->addChild('nom', $charName);
+
+        $characteristic= $character->addChild('caracteristiques');
+        $characteristic->addChild('vie', $lifePoint);
+        $characteristic->addChild('defense', $defPoint);
+        $characteristic->addChild('attaque', $atkPoint);
+        $characteristic->addChild('esquive', $escPoint);
+        echo $gameDir.$gameTitle."Character.xml";
+        $xmlFile->asXML($gameDir.$gameTitle);
+
+        $dom = dom_import_simplexml($xmlFile)->ownerDocument;
+        $dom->formatOutput = true;
+        $dom->saveXML();
     }
 }

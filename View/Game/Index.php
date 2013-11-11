@@ -4,7 +4,7 @@
 <div>
     <div>
         <h2>Personnage(s)</h2>
-        <input type="button" value="Créer un Héros" onclick="location.href='Game/CreateCharacter'">
+        <input type="button" value="Créer un Héros" onclick="location.href='Game/CreateCharacter?gameTitle=<?=$gameTitle?>'">
     </div>
     <div>
         <h2>Situation(s)</h2>
