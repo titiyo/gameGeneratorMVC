@@ -19,9 +19,8 @@
             <label>Points de vie : </label><input type="text" name="lifePoint" id="lifePoint" required>
             <label>Points de défense : </label><input type="text" name="defPoint" id="defPoint" required>
             <label>Points d'attaque : </label><input type="text" name="atkPoint" id="atkPoint" required>
-            <label>Points d'esquive : </label><input type="text" name="escPoint" id="escPoint" required>
+            <label>Points d'initiative : </label><input type="text" name="iniPoint" id="iniPoint" required>
         </fieldset><br>
         <input type="submit"  value="Ok"/>
     </form>
-
 </div>

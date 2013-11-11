@@ -143,17 +143,24 @@ XML;
         {
             if($value!="." && $value!="..")
             {
-                $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
-                echo $detailGame;
-                return array("creationDate"=> $detailGame->datecreation,
+                if(strpos($value, "fileGame")!== false)
+                {
+                    $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
+                    $charGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$nameGame."Characters.xml");
+                    $reqXpath = $charGame-> xpath("/personnages/personnage");
+                    $countChar = count($reqXpath);
+
+                    return array("creationDate"=> $detailGame->datecreation,
                     "title"=>$detailGame->titre,
                     "creator"=>$detailGame->createur,
                     "nbSituation"=>$detailGame->nbsituation,
                     "description"=>$detailGame->description,
-                    "difficulty"=>$detailGame->difficulte);
+                    "difficulty"=>$detailGame->difficulte,
+                    "nbCharacter"=>$countChar);
+                }
             }
         }
-        return null;
+        //return null;
     }
 
     public function situationDetails($gameFilePath, $idSituation)
@@ -258,7 +265,7 @@ XML;
     	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
     }
 
-    function createNewCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $escPoint)
+    function createNewCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $iniPoint)
     {
         $xmlFile = simplexml_load_file($gameDir.$gameTitle."Characters.xml");
         $character = $xmlFile->addChild('personnage');
@@ -269,12 +276,63 @@ XML;
         $characteristic->addChild('vie', $lifePoint);
         $characteristic->addChild('defense', $defPoint);
         $characteristic->addChild('attaque', $atkPoint);
-        $characteristic->addChild('esquive', $escPoint);
-        echo $gameDir.$gameTitle."Character.xml";
-        $xmlFile->asXML($gameDir.$gameTitle);
+        $characteristic->addChild('initiative', $iniPoint);
+        $xmlFile->asXML($gameDir.$gameTitle."Characters.xml");
 
         $dom = dom_import_simplexml($xmlFile)->ownerDocument;
         $dom->formatOutput = true;
         $dom->saveXML();
+    }
+
+    function getAllCharacters($charFilePath)
+    {
+        $char = simplexml_load_file($charFilePath);
+        $characters = array();
+
+        foreach($char->personnage as $item)
+        {
+            //echo  $item->nom." ".(string)$item->attributes()->type." ".$item->caracteristiques->vie." ".$item->caracteristiques->defense." ".$item->caracteristiques->attaque." ".$item->caracteristiques->initiative."<br>";
+            $character = array("nom" => $item->nom,
+                                "type" => (string)$item->attributes()->type,
+                                "vie" => $item->caracteristiques->vie,
+                                "defense" => $item->caracteristiques->defense,
+                                "attaque" => $item->caracteristiques->attaque,
+                                "initiative" => $item->caracteristiques->initiative);
+            array_push($characters, $character);
+        }
+        return $characters;
+    }
+
+    public function getCharacterByName($charName, $gameTitle)
+    {
+        $xmlFile = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
+        $char = $xmlFile->xpath("personnage[nom='$charName']");
+        $typeChar = $char[0]->xpath("@type");
+
+        return array("nom"=> $charName,
+            "type" => $typeChar[0],
+            "vie" => $char[0]->caracteristiques->vie,
+            "defense" => $char[0]->caracteristiques->defense,
+            "attaque" => $char[0]->caracteristiques->attaque,
+            "initiative" => $char[0]->caracteristiques->initiative);
+    }
+
+    function updateCharacter($gameTitle, $charName, $typeChar, $lifePoint, $defPoint, $atkPoint, $iniPoint)
+    {
+        $xmlFile = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
+        //$charFounded = $xmlFile->xpath("personnage[nom='$charName']");
+
+        foreach($xmlFile->personnage as $char)
+        {
+             if($char->nom==$charName)
+             {
+                $char[0]["type"]=$typeChar;
+                $char->caracteristiques->vie=$lifePoint;
+                $char->caracteristiques->defense=$defPoint;
+                $char->caracteristiques->attaque=$atkPoint;
+                $char->caracteristiques->initiative=$iniPoint;
+             }
+        }
+        $xmlFile->asXml("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
     }
 }

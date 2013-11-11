@@ -55,17 +55,21 @@ class ControllerGame extends Controller {
         if($this->gameTitle != null && $this->createDate != null)
         {
             $gameFilePath = "Content/xml/members/".$_SESSION["login"]."/".$this->gameTitle."/fileGame_".$_SESSION["login"]."_".$this->createDate.".xml";
-
+            $charFilePath = "Content/xml/members/".$_SESSION["login"]."/".$this->gameTitle."/".$this->gameTitle."Characters.xml";
             if(file_exists($gameFilePath))
             {
-                // Get all Caracters
-
                 // Get all Situations
                 $situations = $this->modelGame->getAllSituations($gameFilePath);
             }
+
+            if(file_exists($charFilePath))
+            {
+                // Get all Characters
+                $characters = $this->modelGame->getAllCharacters($charFilePath);
+            }
         }
 
-        $this->generateView(array('gameTitle' => $this->gameTitle,'createDate' => $this->createDate, 'situations' => $situations));
+        $this->generateView(array('gameTitle' => $this->gameTitle,'createDate' => $this->createDate, 'situations' => $situations, 'characters' => $characters));
     }
 
     public function createGame()
@@ -290,7 +294,6 @@ class ControllerGame extends Controller {
         $this->atkPoint=$this->request->getParameter("atkPoint");
         $this->escPoint=$this->request->getParameter("escPoint");
         $login = $_SESSION["login"];
-        echo "test ".$this->gameTitle;
         $fileGameDirectory = "Content/xml/members/".$login."/".$this->gameTitle."/";
 
         $founded=false;
@@ -310,6 +313,25 @@ class ControllerGame extends Controller {
         if(!$founded)
             $this->modelGame->createFileCharacter($fileGameDirectory, $this->gameTitle, $this->charName, $this->charType, $this->lifePoint, $this->defPoint, $this->atkPoint, $this->escPoint);
 
-        //$this->generateView();
+        $this->generateView();
+    }
+
+    public function EditCharacter()
+    {
+        $character = $this->modelGame->getCharacterByName($_GET["charName"], $_GET["gameTitle"]);
+        $this->generateView(array('character' =>$character));
+    }
+
+    public function EditCharacters()
+    {
+        $game = $_GET["gameTitle"];
+        $charName =  $this->request->getParameter("charName");
+        $type =  $this->request->getParameter("charType");
+        $lifePoint =  $this->request->getParameter("lifePoint");
+        $defPoint =   $this->request->getParameter("defPoint");
+        $atkPoint =   $this->request->getParameter("atkPoint");
+        $initPoint =   $this->request->getParameter("iniPoint");
+        $this->modelGame->updateCharacter($game, $charName, $type, $lifePoint, $defPoint, $atkPoint, $initPoint);
+        $this->executeAction("Index");
     }
 }

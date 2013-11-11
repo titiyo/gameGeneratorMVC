@@ -11,6 +11,7 @@
                     <label style="font-weight:bold;">Date de création : </label><?=$item["gameDetail"]["creationDate"]?><br>
                     <label style="font-weight:bold;">Description du jeu : </label><?=$item["gameDetail"]["description"]?><br>
                     <label style="font-weight:bold;">Difficulté du jeu : </label><?=$item["gameDetail"]["difficulty"]?><br>
+                    <label style="font-weight:bold;">Nombre de personnage(s) : </label><?=$item["gameDetail"]["nbCharacter"]?><br>
                     <label style="font-weight:bold;">Nombre de situation(s) : </label><?=$item["gameDetail"]["nbSituation"]?><br>
                     <input type="button" value="Game Panel" onclick="location.href='Game/index?gameTitle=<?=$item["gameDetail"]["title"]?>&createDate=<?=$item["gameDetail"]["creationDate"]?>'">
                 </div>
