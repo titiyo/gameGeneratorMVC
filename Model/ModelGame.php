@@ -146,10 +146,15 @@ XML;
                 if(strpos($value, "fileGame")!== false)
                 {
                     $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
-                    $charGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$nameGame."Characters.xml");
-                    $reqXpath = $charGame-> xpath("/personnages/personnage");
-                    $countChar = count($reqXpath);
 
+                    $pathCharacters = "Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$nameGame."Characters.xml";
+                    $countChar = 0;
+                    if(file_exists($pathCharacters))
+                    {
+                        $charGame = simplexml_load_file($pathCharacters);
+                        $reqXpath = $charGame-> xpath("/personnages/personnage");
+                        $countChar = count($reqXpath);
+                    }
                     return array("creationDate"=> $detailGame->datecreation,
                     "title"=>$detailGame->titre,
                     "creator"=>$detailGame->createur,

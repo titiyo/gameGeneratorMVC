@@ -43,6 +43,7 @@ class ControllerGame extends Controller {
      */
     public function index() {
         $situations = null;
+        $characters = null;
 
         if($this->request->existParameter("gameTitle"))
         {
@@ -58,12 +59,9 @@ class ControllerGame extends Controller {
             $charFilePath = "Content/xml/members/".$_SESSION["login"]."/".$this->gameTitle."/".$this->gameTitle."Characters.xml";
             if(file_exists($gameFilePath))
             {
-                // Get all Caracters
-
                 // Get all Situations
                 $situations = $this->modelGame->getAllSituations($gameFilePath);
             }
-
             if(file_exists($charFilePath))
             {
                 // Get all Characters
@@ -289,33 +287,27 @@ class ControllerGame extends Controller {
     public function createCharacters()
     {
         $this->gameTitle = $this->request->getParameter("gameTitle");
-        $this->charName=$this->request->getParameter("charName");
-        $this->charType=$this->request->getParameter("charType");
-        $this->lifePoint=$this->request->getParameter("lifePoint");
-        $this->defPoint=$this->request->getParameter("defPoint");
-        $this->atkPoint=$this->request->getParameter("atkPoint");
-        $this->escPoint=$this->request->getParameter("escPoint");
+        $this->charName = $this->request->getParameter("charName");
+        $this->charType = $this->request->getParameter("charType");
+        $this->lifePoint = $this->request->getParameter("lifePoint");
+        $this->defPoint = $this->request->getParameter("defPoint");
+        $this->atkPoint = $this->request->getParameter("atkPoint");
+        $this->escPoint = $this->request->getParameter("escPoint");
         $login = $_SESSION["login"];
         $fileGameDirectory = "Content/xml/members/".$login."/".$this->gameTitle."/";
 
-        $founded=false;
-        $xmlFile = $this->gameTitle."Characters.xml";
-        $root = scandir($fileGameDirectory,1);
-        foreach($root as $value)
-        {
-            if($value!="." && $value!="..")
-            {
-                if($value==$xmlFile)
-                {
-                    $founded=true;
-                    $this->modelGame->createNewCharacter($fileGameDirectory, $this->gameTitle, $this->charName, $this->charType, $this->lifePoint, $this->defPoint, $this->atkPoint, $this->escPoint);
-                }
-            }
-        }
-        if(!$founded)
-            $this->modelGame->createFileCharacter($fileGameDirectory, $this->gameTitle, $this->charName, $this->charType, $this->lifePoint, $this->defPoint, $this->atkPoint, $this->escPoint);
+        //$founded=false;
+        $xmlFile = $fileGameDirectory.$this->gameTitle."Characters.xml";
 
-        $this->generateView();
+        if(file_exists($xmlFile))
+        {
+            $this->modelGame->createNewCharacter($fileGameDirectory, $this->gameTitle, $this->charName, $this->charType, $this->lifePoint, $this->defPoint, $this->atkPoint, $this->escPoint);
+        }
+        else
+        {
+            $this->modelGame->createFileCharacter($fileGameDirectory, $this->gameTitle, $this->charName, $this->charType, $this->lifePoint, $this->defPoint, $this->atkPoint, $this->escPoint);
+        }
+        $this->executeAction("Index");
     }
 
     public function EditCharacter()
