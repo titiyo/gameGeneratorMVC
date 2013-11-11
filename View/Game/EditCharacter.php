@@ -8,7 +8,9 @@
  *
  -->
 <div class="hero-unit">
-    <form name="createSituation" method="post" action="game/EditCharacters?gameTitle=<?=$_GET["gameTitle"]?>">
+    <form name="createSituation" method="post" action="game/EditCharacters">
+        <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
+        <input type="hidden" name="createDate" value="<?=$createDate?>" />
         <label>Nom du héros : </label><input type="text" name="char" id="char" value="<?=$character["nom"]?>" disabled>
         <input type="hidden" id="charName" name="charName" value="<?=$character["nom"]?>">
         <label>Type du héros </label>

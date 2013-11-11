@@ -5,9 +5,10 @@
  * Time: 15:56
  * To change this template use File | Settings | File Templates.
  *-->
-
 <div class="hero-unit">
-    <form name="createSituation" method="post" action="game/createCharacters?gameTitle=<?=$_GET["gameTitle"]?>">
+    <form name="createSituation" method="post" action="game/createCharacters">
+        <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
+        <input type="hidden" name="createDate" value="<?=$createDate?>" />
         <label>Nom du héros : </label><input type="text" name="charName" id="charName" required>
         <label>Type du héros </label>
         <select id="charType" name="charType" required>

@@ -8,7 +8,7 @@
             <ul>
                 <?php foreach($characters as $char):?>
                     <li>
-                        <a href="Game/EditCharacter?gameTitle=<?=$gameTitle?>&charName=<?=$char["nom"]?>">
+                        <a href="Game/EditCharacter?gameTitle=<?=$gameTitle?>&charName=<?=$char["nom"]?>&createDate=<?=$createDate?>">
                             <?=$char["nom"]?>
                             <i>
                                 <?php $type="Heros";
@@ -26,7 +26,7 @@
                 <?php endforeach?>
             </ul>
         <?php endif; ?>
-        <input type="button" value="Créer un Héros" onclick="location.href='Game/CreateCharacter?gameTitle=<?=$gameTitle?>'">
+        <input type="button" value="Créer un personnage" onclick="location.href='Game/CreateCharacter?gameTitle=<?=$gameTitle?>&createDate=<?=$createDate?>'">
     </div>
     <div>
         <h2>Situation(s)</h2>

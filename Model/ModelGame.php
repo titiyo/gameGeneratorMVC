@@ -165,7 +165,7 @@ XML;
                 }
             }
         }
-        //return null;
+        return null;
     }
 
     public function situationDetails($gameFilePath, $idSituation)
