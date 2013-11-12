@@ -188,8 +188,10 @@ XML;
                     array_push($points, $b->points);
                 }
 
+                $situationsMap = $this->getAllSituations($gameFilePath);
+                
                 return array("type" => $item["type"], "title" => $item->situationTitle, "code" => $item->situationCode, "exposition" => $item->situationExposition
-                    , "question" => $item->question->label, "answers" => $answer, "points" => $points);
+                    , "question" => $item->question->label, "answers" => $answer, "points" => $points, "situationsMap" => $situationsMap, "idSituation" => $idSituation);
             }
         }
         return array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
@@ -206,25 +208,28 @@ XML;
 
     public function editSituationInGameFile($UserGameFile, $arrayForm, $idSituation)
     {
+    	
         $game = simplexml_load_file($UserGameFile);
 
         foreach($game->situation as $item)
         {
-        	print_r($item);
+	
             if($item->situationCode == $idSituation)
             {
-                $item["type"] = $arrayForm["type"];
-                $item->situationTitle = $arrayForm["title"];
-                $item->situationExposition = $arrayForm["exposition"];
-                $item->question->label =  $arrayForm["question"];
+            	//print_r($item);
+            	
+                $item["type"] = $arrayForm["situationType"];
+                $item->situationTitle = $arrayForm["situationTitle"];
+                $item->situationExposition = $arrayForm["situationExposition"];
+                $item->question->label =  $arrayForm["situationQuestion"];
 
                 for($i=0; $i < count($item->question->suivant->si->test); $i++)
                 {
                     //$item->question->suivant->si->test[$i] = $arrayForm["answer".$i];
-                	$item->question->choix->rep[$i] = $arrayForm["answer".$i];
+                	$item->question->choix->rep[$i] = $arrayForm["situationReponse".$i];
                 }
 
-                if($arrayForm["type"]=="Combat")
+                if($arrayForm["situationType"]=="Combat")
                 {
                     $item->question->suivant->si->test->si->test[0]->pointsVictoire = $arrayForm["winPoint"];
                     $item->question->suivant->si->test->si->test[1]->pointsDefaite = $arrayForm["loosePoint"];
@@ -234,7 +239,7 @@ XML;
                 	//reprendre ici
                     for($i=0; $i < count($item->question->suivant->si->test); $i++)
                     {
-                        $item->question->suivant->si->test[$i]->points = $arrayForm["nbPoint".$i];
+                        $item->question->suivant->si->test[$i]->points = $arrayForm["situationNbPoints".$i];
                     }
                 }
 
@@ -310,6 +315,25 @@ XML;
 
     	$xml->asXml($UserGameFile);
     	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
+    }
+    
+    public function getAllSituationsInGameFile($userGameFile)
+    {
+    	$xml = simplexml_load_file($userGameFile);
+    	 
+    	$result1 = $xml->xpath("/jeu/situation/situationCode");
+    	$result2 = $xml->xpath("/jeu/situation/situationTitle");
+    	 
+    	//$tabSituationsCodeTitle=array();
+    	$tabRetour=array();
+    	for($i=0;$i<count($result1);$i++)
+    	{
+    
+    	$tabSituationsCodeTitle= array("code$i" => $result1[$i], "title$i" => $result2[$i]);
+    	array_push($tabRetour, $tabSituationsCodeTitle);
+    
+    	}
+    	return $tabRetour;
     }
 
     function createNewCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $iniPoint)

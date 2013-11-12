@@ -55,3 +55,4 @@
 </table>
 <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
 <input type="hidden" name="createDate" value="<?=$createDate?>" />
+<input type="hidden" name="idSituation" value="<?=$situation["idSituation"]?>" />
