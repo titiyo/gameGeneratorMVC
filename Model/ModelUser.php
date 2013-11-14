@@ -56,5 +56,15 @@ class ModelUser extends Model {
         $dom->saveXML();
     }
 
+    public function getUserList()
+    {
+        $userList = array();
+        $i=0;
+        foreach($this->fileXml->user as $usr)
+        {
+             array_push($userList, $usr);
+        }
+        return $userList;
+    }
 
 }

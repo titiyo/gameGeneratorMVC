@@ -90,5 +90,11 @@ class ControllerAuthentication extends Controller {
         // On redirige le visiteur vers la page d'accueil
         header ('location: ../Index.php');
     }
+
+    public function viewUser()
+    {
+        $userList = $this->modelUser->getUserList();
+        $this->generateView(array('userList' => $userList));
+    }
 }
 
