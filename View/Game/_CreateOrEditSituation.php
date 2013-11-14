@@ -32,22 +32,22 @@
         </td>
     </tr>
 
-    <?php for($i = 0; $i < $maxResponse; $i++):?>
-        <tr>
+    <?php for($i = 0; $i < 1; $i++):?>
+        <tr class="answerSituation">
             <td>
                 <label>Réponse <?=$i?> : </label>
                 <?php if( $i < count($situation["answers"])): ?>
-                    <input type="text" name="situationReponse<?=$i?>" style="width:90%;" value="<?=$situation["answers"][$i]?>"/>
+                    <input type="text" name="situationReponse[<?=$i?>]" style="width:90%;" value="<?=$situation["answers"][$i]?>"/>
                 <?php else: ?>
-                    <input type="text" name="situationReponse<?=$i?>" style="width:90%;"/>
+                    <input type="text" name="situationReponse[<?=$i?>]" style="width:90%;"/>
                 <?php endif; ?>
             </td>
             <td>
                 <label>Nbr points : </label>
                 <?php if( $i < count($situation["points"])): ?>
-                    <input type="text" name="situationNbPoint<?=$i?>" style="width:90%;" value="<?=$situation["points"][$i]?>"/>
+                    <input type="text" name="situationNbPoint[<?=$i?>]" style="width:90%;" value="<?=$situation["points"][$i]?>"/>
                 <?php else: ?>
-                    <input type="text" name="situationNbPoint<?=$i?>" style="width:90%;"/>
+                    <input type="text" name="situationNbPoint[<?=$i?>]" style="width:90%;"/>
                 <?php endif; ?>
             </td>
         </tr>

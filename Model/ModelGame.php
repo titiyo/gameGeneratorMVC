@@ -252,69 +252,62 @@ XML;
 
     public function addSituationInGameFile($UserGameFile, $arrayForm)
     {
-    	
-    	
     	$xml = simplexml_load_file($UserGameFile);
 
     	$situation = $xml->addChild("situation");
-    	$situation->addAttribute("type",$arrayForm[0]);
+    	$situation->addAttribute("type",$arrayForm["situationType"]);
     	$situation->addChild("situationCode", uniqid());
-    	$situation->addChild("situationTitle",$arrayForm[1]);
-    	$situation->addChild("situationExposition",$arrayForm[2]);
+    	$situation->addChild("situationTitle",$arrayForm["situationTitle"]);
+    	$situation->addChild("situationExposition",$arrayForm["situationExposition"]);
 
-    	if($arrayForm[0]=="Combat")
+    	if($arrayForm["situationType"] == "Combat")
     	{
     		$situation->addChild("ennemi",0);
     	}
 
     	$question = $situation->addChild("question");
-    	$question->addChild("label", $arrayForm[3]);
+    	$question->addChild("label", $arrayForm["situationQuestion"]);
+
     	$choix = $question->addChild("choix");
-    	$rep = $choix->addChild("rep",$arrayForm[4]);
-    	$rep->addAttribute("val", "1");
 
-    	$rep = $choix->addChild("rep",$arrayForm[6]);
-    	$rep->addAttribute("val", "2");
-
-    	$rep = $choix->addChild("rep",$arrayForm[8]);
-    	$rep->addAttribute("val","3");
+        for($i = 0; $i < count($arrayForm["tabSituationReponses"]) ; $i++)
+        {
+            $rep = $choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
+            $rep->addAttribute("val", $i);
+        }
 
     	$suivant = $question->addChild("suivant");
     	$si = $suivant->addChild("si");
-    	$test = $si->addChild("test");
-    	$test->addAttribute("val","1");
 
-    	if($arrayForm[0]=="Combat")
+    	if($arrayForm["situationType"] == "Combat")
     	{
+            $test = $si->addChild("test");
+            $test->addAttribute("val","0");
     		$si = $test->addChild("si");
     		$test = $si->addChild("test");
     		$test->addAttribute("vieEnnemi","0");
     		$test->addChild("code", "0");
-    		$test->addChild("pointsVictoire", $arrayForm[10]);
+    		$test->addChild("pointsVictoire", $arrayForm["winPoint"]);
     		$test = $si->addChild("test");
     		$test->addAttribute("vieHeros","0");
     		$test->addChild("code", "0");
-    		$test->addChild("pointsDefaite", $arrayForm[11]);
+    		$test->addChild("pointsDefaite", $arrayForm["loosePoint"]);
     		$test = $si->addChild("test");
     		$test->addChild("code", "0");
     	}
     	else
     	{
-    		$points = $test->addChild("points", $arrayForm[5]);
-    		$code = $test->addChild("code", "0");
-    		$test = $si->addChild("test");
-    		$test->addAttribute("val","2");
-    		$points = $test->addChild("points", $arrayForm[7]);
-    		$code = $test->addChild("code", "0");
+            for($i = 0; $i < count($arrayForm["tabSituationPoints"]) ; $i++)
+            {
+                $test = $si->addChild("test");
+                $test->addAttribute("val","2");
 
-    		$test = $si->addChild("test");
-    		$test->addAttribute("val","3");
-    		$points = $test->addChild("points", $arrayForm[9]);
-    		$code = $test->addChild("code", "0");
+                $test->addChild("points", $arrayForm["tabSituationPoints"][$i]);
+                $test->addChild("code", "0");
+            }
     	}
 
     	$xml->asXml($UserGameFile);
-    	//$xml->asXml("Content/xml/Members/jbreton/Star Wars/fileGame_jbreton_05112013.xml");
     }
     
     public function getAllSituationsInGameFile($userGameFile)

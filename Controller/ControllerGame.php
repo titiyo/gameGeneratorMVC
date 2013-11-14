@@ -30,6 +30,9 @@ class ControllerGame extends Controller {
     private $situationNbPoint2;
     private $winPoint;
     private $loosePoint;
+
+    private $tabSituationReponse;
+    private $tabSituationPoints;
     
     /**
      * Constructeur
@@ -181,13 +184,16 @@ class ControllerGame extends Controller {
     	$this->situationType = $this->request->getParameter("type");
     	$this->situationTitle = $this->request->getParameter("situationTitle");
     	$this->situationExposition = $this->request->getParameter("situationExposition");
+        $this->tabSituationReponse = $this->request->getParameter("situationReponse");
+        $this->tabSituationPoints = $this->request->getParameter("situationNbPoint");
     	$this->situationQuestion = $this->request->getParameter("situationQuestion");
-    	$this->situationReponse0 = $this->request->getParameter("situationReponse0");
+
+    	/*$this->situationReponse0 = $this->request->getParameter("situationReponse0");
     	$this->situationNbPoint0 = $this->request->getParameter("situationNbPoint0");
     	$this->situationReponse1 = $this->request->getParameter("situationReponse1");
     	$this->situationNbPoint1 = $this->request->getParameter("situationNbPoint1");
     	$this->situationReponse2 = $this->request->getParameter("situationReponse2");
-    	$this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2");
+    	$this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2"); */
 
     	$this->winPoint = $this->request->getParameter("winPoint");
     	$this->loosePoint = $this->request->getParameter("loosePoint");
@@ -195,7 +201,7 @@ class ControllerGame extends Controller {
     	$this->gameTitle = $this->request->getParameter("gameTitle");
         $this->createDate = $this->request->getParameter("createDate");
 
-    	if($this->situationType && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null && $this->situationReponse0!=null && $this->situationNbPoint0!=null)
+    	if($this->situationType != null && $this->situationTitle != null && $this->situationExposition != null && $this->situationQuestion != null)
     	{
     		$login = $_SESSION["login"];
     		$rootDirectory = "Content/xml/Members/".$login;
@@ -203,11 +209,12 @@ class ControllerGame extends Controller {
     		//get game file name
     		$gameFile = $fileGameDirectory."fileGame_".$login."_".$this->createDate.".xml";
 
-    		$arrayForm = array($this->situationType, $this->situationTitle, $this->situationExposition, $this->situationQuestion, $this->situationReponse0, $this->situationNbPoint0, $this->situationReponse1, $this->situationNbPoint1, $this->situationReponse2, $this->situationNbPoint2, $this->winPoint, $this->loosePoint);
+    		$arrayForm = array("situationType" => $this->situationType, "situationTitle" => $this->situationTitle, "situationExposition" => $this->situationExposition,
+                "situationQuestion" => $this->situationQuestion, "tabSituationReponses" => $this->tabSituationReponse, "tabSituationPoints" => $this->tabSituationPoints,
+                "winPoint" => $this->winPoint, "loosePoint" =>$this->loosePoint);
 
     		//add situation to the gameFile
     		$this->modelGame->addSituationInGameFile($gameFile, $arrayForm);
-
             //Update metadata Number Of Situation
             $this->modelGame->UpdateNumberOfSituation($gameFile);
     	}

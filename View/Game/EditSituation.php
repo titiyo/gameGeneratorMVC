@@ -61,6 +61,7 @@ o	List De choix (Nombre Max à définir ou illimité ?)
 <div class="hero-unit">
     <form name="editSituation" method="post" action="game/editSituations">
         <?php include("_CreateOrEditSituation.php");  ?>
+        <input type="button" value="Ajout d'une réponse" onclick="addAnswer();" />
         <input type="hidden" name="idSituation" value="<?= $situation["idSituation"]; ?>"/>
         <input type="submit" name="editSituations" value="Submit"/>
     </form>

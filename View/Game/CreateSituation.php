@@ -56,11 +56,78 @@ o	List De choix (Nombre Max à définir ou illimité ?)
             }
         }
     }
+
+    function addAnswer()
+    {
+        var numberOfSituation = $(".answerSituation").length;
+        var tab = $(".answerSituation").last();
+
+        var tr = document.createElement("tr");
+        tr.setAttribute("class","answerSituation")
+
+        var tdAnswer = document.createElement("td");
+
+        var AnswerInput = document.createElement("input");
+        AnswerInput.setAttribute("type","text");
+        AnswerInput.setAttribute("style","width:90%;");
+        AnswerInput.setAttribute("name","situationReponse[" + numberOfSituation + "]");
+
+        var labelAnswer = document.createElement("label");
+        labelAnswer.innerHTML = "Réponse " + numberOfSituation + " :";
+
+        tdAnswer.appendChild(labelAnswer);
+        tdAnswer.appendChild(AnswerInput);
+
+        var tdPoints = document.createElement("td");
+
+        var pointInput = document.createElement("input");
+        pointInput.setAttribute("style","width:90%;");
+        pointInput.setAttribute("type","text");
+        pointInput.setAttribute("name","situationNbPoint[" + numberOfSituation + "]");
+
+        var labelPoints = document.createElement("label");
+        labelPoints.innerHTML = "Nbr points : ";
+
+        tdPoints.appendChild(labelPoints);
+        tdPoints.appendChild(pointInput);
+
+        var tdDeleteAnswer = document.createElement("input");
+        tdDeleteAnswer.setAttribute("type","button");
+        tdDeleteAnswer.setAttribute("value","Supprimer la réponse");
+        tdDeleteAnswer.setAttribute("onclick","deleteAnswer(this)");
+
+        tr.appendChild(tdAnswer);
+        tr.appendChild(tdPoints);
+        tr.appendChild(tdDeleteAnswer);
+
+        tab[0].parentNode.insertBefore(tr, tab.nextSibling);
+    }
+
+    function deleteAnswer(trNode)
+    {
+        var trToDelete = trNode.parentNode;
+
+        trToDelete.parentNode.removeChild(trToDelete);
+
+        $.each($(".answerSituation"), function (i, item)
+        {
+            // Update label
+            this.firstElementChild.firstElementChild.innerHTML = 	"Réponse " + i + " :";
+            // Update situation response Name
+            item.firstElementChild.lastElementChild.name = "situationReponse[" + i + "]";
+
+            // Update Situation point name
+            item.children[1].lastChild.name = "situationNbPoint[" + i + "]";
+
+        });
+    }
 </script>
 
 <div class="hero-unit">
     <form name="createSituation" method="post" action="game/createSituations">
         <?php include("_CreateOrEditSituation.php");  ?>
+
+        <input type="button" value="Ajout d'une réponse" onclick="addAnswer();" />
         <input type="submit" name="createSituation" value="Submit"/>
     </form>
 </div>
