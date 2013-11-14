@@ -48,6 +48,7 @@ XML;
      * @param $description
      * @param $difficulty
      * @param $login
+     * @return string
      */
     public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $difficulty, $login)
     {
@@ -93,6 +94,7 @@ XML;
         $fileName = $gameDir."/".$gameTitle."Characters.xml";
         $xml->asXml($fileName);
     }
+
     public function getGameList($login)
     {
         $dir = "Content/xml/members/";
@@ -238,7 +240,7 @@ XML;
                 	}
                 	else 
                 	{
-                		//Création
+                		//Crï¿½ation
                 		$rep = $item->question->choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
                 		$rep->addAttribute("val", $i);
                 	}
@@ -248,8 +250,8 @@ XML;
 
                 if($arrayForm["situationType"]=="Combat")
                 {
-                    $item->question->suivant->si->test->si->test[0]->pointsVictoire = $arrayForm["winPoint"];
-                    $item->question->suivant->si->test->si->test[1]->pointsDefaite = $arrayForm["loosePoint"];
+                    $item->question->suivant->si->test->si->test[0]->pointsVictoire = $arrayForm["winPoints"];
+                    $item->question->suivant->si->test->si->test[1]->pointsDefaite = $arrayForm["loosePoints"];
                 }
                 else
                 {
@@ -266,7 +268,7 @@ XML;
                     	}
                     	else
                     	{
-                    		//Création
+                    		//Crï¿½ation
                     		$test = $item->question->suivant->si->addChild("test");
 			                $test->addAttribute("val",$i);
 			
@@ -320,11 +322,11 @@ XML;
     		$test = $si->addChild("test");
     		$test->addAttribute("vieEnnemi","0");
     		$test->addChild("code", "0");
-    		$test->addChild("pointsVictoire", $arrayForm["winPoint"]);
+    		$test->addChild("pointsVictoire", $arrayForm["winPoints"]);
     		$test = $si->addChild("test");
     		$test->addAttribute("vieHeros","0");
     		$test->addChild("code", "0");
-    		$test->addChild("pointsDefaite", $arrayForm["loosePoint"]);
+    		$test->addChild("pointsDefaite", $arrayForm["loosePoints"]);
     		$test = $si->addChild("test");
     		$test->addChild("code", "0");
     	}

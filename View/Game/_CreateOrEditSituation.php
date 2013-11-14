@@ -184,7 +184,21 @@
 			</select>
     	</td>
      <?php endif;?>
-     </tr> 
+     </tr>
+
+
+    <?php if(!empty($situation["type"]) && $situation["type"] == "Combat"): ?>
+        <tr class="combatElements">
+            <td>
+                <label>Point en cas de victoire :</label>
+                <input type="text" name="winPoint" style="width:90%;"/>
+            </td>
+            <td>
+                <label>Point en cas de défaite :</label>
+                <input type="text" name="loosePoint" style="width:90%;"/>
+            </td>
+        </tr>
+    <?php endif; ?>
 </table>
 <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
 <input type="hidden" name="createDate" value="<?=$createDate?>" />
