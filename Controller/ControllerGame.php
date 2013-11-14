@@ -22,12 +22,6 @@ class ControllerGame extends Controller {
     private $situationTitle;
     private $situationExposition;
     private $situationQuestion;
-    private $situationReponse0;
-    private $situationNbPoint0;
-    private $situationReponse1;
-    private $situationNbPoint1;
-    private $situationReponse2;
-    private $situationNbPoint2;
     private $winPoint;
     private $loosePoint;
 
@@ -65,7 +59,7 @@ class ControllerGame extends Controller {
             if(file_exists($gameFilePath))
             {
                 // Get all Situations
-                $situations = $this->modelGame->getAllSituations($gameFilePath);
+                $situations = $this->modelGame->getAllSituations($gameFilePath, 0);
             }
             if(file_exists($charFilePath))
             {
@@ -134,8 +128,15 @@ class ControllerGame extends Controller {
             }
 
             // Create the game
-            $this->modelGame->createFileGame($fileGameDirectory, $id, $this->createDate, $this->gameTitle ,$this->description, $this->difficulty, $login);
+            $gameFileName = $this->modelGame->createFileGame($fileGameDirectory, $id, $this->createDate, $this->gameTitle ,$this->description, $this->difficulty, $login);
 
+            //echo ("nom fichier:".$gameFileName);
+            $arrayForm = array("situationType" => "Debut", "situationTitle" => "A modifier", "situationExposition" => "A modifier",
+                "situationQuestion" => "A modifier", "tabSituationReponses" => array("A modifier"), "tabSituationPoints" => array("A modifier"),
+                "winPoint" => "", "loosePoint" =>"");
+            
+            $this->modelGame->addSituationInGameFile($gameFileName, $arrayForm);
+            
             /***************************************************************************
              *                    Create User Games
              **************************************************************************/
@@ -148,7 +149,7 @@ class ControllerGame extends Controller {
             }
             //Add game
             $this->modelGame->addGameInUserFileGame($UserGameFile, $this->gameTitle);
-
+            
             // Redirect to the game panel
             $this->executeAction("Index");
         }
@@ -164,10 +165,8 @@ class ControllerGame extends Controller {
         $this->createDate = $this->request->getParameter("createDate");
 
     	$types = array(
-            "1" => "Début",
-            "2" => "Fin",
-            "3" => "Combat",
-            "4" => "Narration"
+            "1" => "Combat",
+            "2" => "Narration"
         );
 
         $situation = array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
@@ -283,8 +282,6 @@ class ControllerGame extends Controller {
             //add situation to the gameFile
             $this->modelGame->editSituationInGameFile($gameFile, $arrayForm, $this->idSituation);
 
-            //Update metadata Number Of Situation
-            $this->modelGame->UpdateNumberOfSituation($gameFile);
         }
         $this->executeAction("Index");
     }

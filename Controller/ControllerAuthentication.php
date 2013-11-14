@@ -90,33 +90,5 @@ class ControllerAuthentication extends Controller {
         // On redirige le visiteur vers la page d'accueil
         header ('location: ../Index.php');
     }
-
-    public function viewUser()
-    {
-        $userList = $this->modelUser->getUserList();
-        $this->generateView(array('userList' => $userList));
-    }
-
-    public function  editUser()
-    {
-        $userLogin = $this->request->getParameter("userLogin");
-        $userDetail = $this->modelUser->getUserDetails($userLogin);
-        $this->generateView(array('userDetail' => $userDetail));
-    }
-
-    public function  modifUser()
-    {
-        $this->login = $this->request->getParameter("login");
-        $this->email = $this->request->getParameter("email");
-        $this->pwd = $this->request->getParameter("pwd");
-        $this->pwdConf = $this->request->getParameter("pwdConf");
-        $this->type = $this->request->getParameter("typeUser");
-
-        if($this->pwd == $this->pwdConf )
-        {
-            $this->modelUser->modifUser($this->login, $this->type, $this->email, $this->pwd);
-        }
-        $this->executeAction("viewUser");
-    }
 }
 

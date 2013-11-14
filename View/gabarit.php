@@ -56,15 +56,13 @@
                                         <li class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestion</a>
                                             <ul class="dropdown-menu">
-                                                <li class="nav-header">Jeux</li>
                                                 <li>
-                                                    <a href="game/viewUserGame">Visualiser</a>
+                                                    <a href="#">Action</a>
                                                 </li>
                                                 <li class="divider"></li>
-                                                <li class="nav-header">Utilisateurs</li>
-                                                <li>
-                                                    <a href="Authentication/viewUser">Visualiser</a>
-                                                </li>
+                                                <li class="nav-header"> … </li>
+                                                <li> … </li>
+                                                <li> … </li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -108,10 +106,8 @@
     <!-- Le javascript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?= $rootWeb?>/Content/js/jquery-1.10.2.min.js"></script>
-    <script src="<?= $rootWeb?>/Content/js/action.js"></script>
     <script src="<?= $rootWeb?>/Content/js/bootstrap.js"></script>
     <script src="<?= $rootWeb?>/Content/js/bootstrap.min.js"></script>
     <script src="<?= $rootWeb?>/Content/js/bootstrap-collapse.js"></script>
-    <script src="<?= $rootWeb?>/Content/js/bootstrap-dropdown.js"></script>
     </body>
 </html>
