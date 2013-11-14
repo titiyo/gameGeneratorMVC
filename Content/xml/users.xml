@@ -14,8 +14,5 @@
         <pwd>test</pwd>
         <mail>dupont.jean@gmail.com</mail>
     </user>
-<<<<<<< HEAD
 <user group="admin"><lname>bondeau</lname><fname>yohann</fname><login>y.bondeau</login><pwd>test</pwd><mail>y.bondeau@test.fr</mail></user></users>
-=======
-<user group="member"><lname>bondeau</lname><fname>yohann</fname><login>y.bondeau</login><pwd>test</pwd><mail>y.bondeau@test.fr</mail></user></users>
->>>>>>> e3b8a74b1f2c7a4b982e7d93decba863153334ed
+
