@@ -197,10 +197,19 @@ XML;
                     array_push($points, $b->points);
                 }
 
+                $winPoint = "";
+                $loosePoint = "";
+                if($item->question->suivant->si->test->si->test != null)
+                {
+                    $winPoint = $item->question->suivant->si->test->si->test->pointsVictoire;
+                    $loosePoint = $item->question->suivant->si->test->si->test[1]->pointsDefaite;
+                }
+
                 $situationsMap = $this->getAllSituations($gameFilePath, $idSituation);
                 
                 return array("type" => $item["type"], "title" => $item->situationTitle, "code" => $item->situationCode, "exposition" => $item->situationExposition
-                    , "question" => $item->question->label, "answers" => $answer, "points" => $points, "situationsMap" => $situationsMap, "idSituation" => $idSituation);
+                    , "question" => $item->question->label, "answers" => $answer, "points" => $points, "situationsMap" => $situationsMap, "idSituation" => $idSituation,
+                    "winPoint" => $winPoint, "loosePoint" => $loosePoint);
             }
         }
         return array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
@@ -228,7 +237,6 @@ XML;
                 $item->situationExposition = $arrayForm["situationExposition"];
                 $item->question->label =  $arrayForm["situationQuestion"];
 
-                
                 while(count($item->question->choix->rep) > count($arrayForm["tabSituationReponses"]))
                 {
                 	unset($item->question->choix->rep);
@@ -248,16 +256,20 @@ XML;
                 		$rep->addAttribute("val", $i);
                 	}
                 }
-                
-                
-
                 if($arrayForm["situationType"]=="Combat")
                 {
                     $item->question->suivant->si->test->si->test[0]->pointsVictoire = $arrayForm["winPoints"];
+                    $item->question->suivant->si->test->si->test[0]->code = $arrayForm["situationMapping"][0];
                     $item->question->suivant->si->test->si->test[1]->pointsDefaite = $arrayForm["loosePoints"];
+                    // code 1 => situation fin
+                    $item->question->suivant->si->test->si->test[1]->code = "1";
+
+                    $item->question->suivant->si->test[1]->code = $arrayForm["situationMapping"][1];
                 }
                 else
                 {
+                    print_r($arrayForm);
+
                 	while(count($item->question->suivant->si->test) > count($arrayForm["tabSituationPoints"]))
                 	{
                 		unset($item->question->suivant->si->test);
@@ -268,6 +280,10 @@ XML;
                     	{
                     		// Modification
                     		$item->question->suivant->si->test[$i]->points = $arrayForm["tabSituationPoints"][$i];
+                            if(count($arrayForm["situationMapping"]) > $i)
+                            {
+                                $item->question->suivant->si->test[$i]->code = $arrayForm["situationMapping"][$i];
+                            }
                     	}
                     	else
                     	{
@@ -308,6 +324,7 @@ XML;
 
     	$choix = $question->addChild("choix");
 
+        print_r($arrayForm["tabSituationReponses"]);
         for($i = 0; $i < count($arrayForm["tabSituationReponses"]) ; $i++)
         {
             $rep = $choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
@@ -319,20 +336,25 @@ XML;
 
     	if($arrayForm["situationType"] == "Combat")
     	{
-            $test = $si->addChild("test");
-            $test->addAttribute("val","0");
-    		$si = $test->addChild("si");
-    		$test = $si->addChild("test");
-    		$test->addAttribute("vieEnnemi","0");
-    		$test->addChild("code", "0");
-    		$test->addChild("pointsVictoire", $arrayForm["winPoints"]);
-    		$test = $si->addChild("test");
-    		$test->addAttribute("vieHeros","0");
-    		$test->addChild("code", "0");
-    		$test->addChild("pointsDefaite", $arrayForm["loosePoints"]);
-    		$test = $si->addChild("test");
-    		$test->addChild("code", "0");
-    	}
+            $testCombat = $si->addChild("test");
+            $testFuite = $si->addChild("test");
+
+
+            $testCombat->addAttribute("val","0");
+    		$si = $testCombat->addChild("si");
+            $testCombat = $si->addChild("test");
+            $testCombat->addAttribute("vieEnnemi","0");
+            $testCombat->addChild("code", "0");
+            $testCombat->addChild("pointsVictoire", $arrayForm["winPoints"]);
+            $testCombat = $si->addChild("test");
+            $testCombat->addAttribute("vieHeros","0");
+            $testCombat->addChild("code", "0");
+            $testCombat->addChild("pointsDefaite", $arrayForm["loosePoints"]);
+
+            $testFuite->addAttribute("val","1");
+            $testFuite->addChild("code","0");
+            $testFuite->addChild("points", $arrayForm["tabSituationPoints"][0]);
+        }
     	else
     	{
             for($i = 0; $i < count($arrayForm["tabSituationPoints"]) ; $i++)
@@ -419,7 +441,7 @@ XML;
             "initiative" => $char[0]->caracteristiques->initiative);
     }
 
-    function updateCharacter($gameTitle, $charName, $typeChar, $lifePoint, $defPoint, $atkPoint, $iniPoint)
+    public function updateCharacter($gameTitle, $charName, $typeChar, $lifePoint, $defPoint, $atkPoint, $iniPoint)
     {
         $xmlFile = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
         //$charFounded = $xmlFile->xpath("personnage[nom='$charName']");

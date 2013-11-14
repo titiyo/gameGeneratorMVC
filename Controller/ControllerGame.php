@@ -196,9 +196,6 @@ class ControllerGame extends Controller {
     	$this->winPoint = $this->request->getParameter("winPoint");
     	$this->loosePoint = $this->request->getParameter("loosePoint");
 
-
-        echo($this->winPoint . " / " . $this->loosePoint);
-
     	$this->gameTitle = $this->request->getParameter("gameTitle");
         $this->createDate = $this->request->getParameter("createDate");
 
@@ -267,6 +264,8 @@ class ControllerGame extends Controller {
         $this->tabSituationReponse = $this->request->getParameter("situationReponse");
         $this->tabSituationPoints = $this->request->getParameter("situationNbPoint");
 
+        $this->situationMapping = $this->request->getParameter("mappingSituation");
+
         $this->winPoint = $this->request->getParameter("winPoint");
         $this->loosePoint = $this->request->getParameter("loosePoint");
 
@@ -284,7 +283,7 @@ class ControllerGame extends Controller {
             $arrayForm = array("situationType" => $this->situationType, "situationTitle" =>$this->situationTitle,
             		"situationExposition" => $this->situationExposition, "situationQuestion" => $this->situationQuestion,
             		"tabSituationReponses" => $this->tabSituationReponse, "tabSituationPoints" => $this->tabSituationPoints ,
-            		"winPoints" => $this->winPoint, "loosePoints" => $this->loosePoint);
+            		"winPoints" => $this->winPoint, "loosePoints" => $this->loosePoint,"situationMapping" => $this->situationMapping);
 
             //add situation to the gameFile
             $this->modelGame->editSituationInGameFile($gameFile, $arrayForm, $this->idSituation);
