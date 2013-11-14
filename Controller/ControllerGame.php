@@ -22,6 +22,12 @@ class ControllerGame extends Controller {
     private $situationTitle;
     private $situationExposition;
     private $situationQuestion;
+    private $situationReponse0;
+    private $situationNbPoint0;
+    private $situationReponse1;
+    private $situationNbPoint1;
+    private $situationReponse2;
+    private $situationNbPoint2;
     private $winPoint;
     private $loosePoint;
 
