@@ -188,13 +188,6 @@ class ControllerGame extends Controller {
         $this->tabSituationPoints = $this->request->getParameter("situationNbPoint");
     	$this->situationQuestion = $this->request->getParameter("situationQuestion");
 
-    	/*$this->situationReponse0 = $this->request->getParameter("situationReponse0");
-    	$this->situationNbPoint0 = $this->request->getParameter("situationNbPoint0");
-    	$this->situationReponse1 = $this->request->getParameter("situationReponse1");
-    	$this->situationNbPoint1 = $this->request->getParameter("situationNbPoint1");
-    	$this->situationReponse2 = $this->request->getParameter("situationReponse2");
-    	$this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2"); */
-
     	$this->winPoint = $this->request->getParameter("winPoint");
     	$this->loosePoint = $this->request->getParameter("loosePoint");
 
@@ -261,15 +254,12 @@ class ControllerGame extends Controller {
         $this->situationTitle = $this->
         request->getParameter("situationTitle");
         $this->idSituation = $this->request->getParameter("idSituation");
-        echo("ID:".$this->idSituation);
+
         $this->situationExposition = $this->request->getParameter("situationExposition");
         $this->situationQuestion = $this->request->getParameter("situationQuestion");
-        $this->situationReponse0 = $this->request->getParameter("situationReponse0");
-        $this->situationNbPoint0 = $this->request->getParameter("situationNbPoint0");
-        $this->situationReponse1 = $this->request->getParameter("situationReponse1");
-        $this->situationNbPoint1 = $this->request->getParameter("situationNbPoint1");
-        $this->situationReponse2 = $this->request->getParameter("situationReponse2");
-        $this->situationNbPoint2 = $this->request->getParameter("situationNbPoint2");
+
+        $this->tabSituationReponse = $this->request->getParameter("situationReponse");
+        $this->tabSituationPoints = $this->request->getParameter("situationNbPoint");
 
         $this->winPoint = $this->request->getParameter("winPoint");
         $this->loosePoint = $this->request->getParameter("loosePoint");
@@ -277,7 +267,7 @@ class ControllerGame extends Controller {
         $this->gameTitle = $this->request->getParameter("gameTitle");
         $this->createDate = $this->request->getParameter("createDate");
 
-        if($this->situationType && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null && $this->situationReponse0!=null && $this->situationNbPoint0!=null)
+        if($this->situationType != null && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null)
         {
             $login = $_SESSION["login"];
             $rootDirectory = "Content/xml/Members/".$login;
@@ -287,9 +277,7 @@ class ControllerGame extends Controller {
 
             $arrayForm = array("situationType" => $this->situationType, "situationTitle" =>$this->situationTitle,
             		"situationExposition" => $this->situationExposition, "situationQuestion" => $this->situationQuestion,
-            		"situationReponse0" => $this->situationReponse0, "situationNbPoints0" => $this->situationNbPoint0,
-            		"situationReponse1" => $this->situationReponse1, "situationNbPoints1" => $this->situationNbPoint1,
-            		"situationReponse2" => $this->situationReponse2, "situationNbPoints2" => $this->situationNbPoint2,
+            		"tabSituationReponses" => $this->tabSituationReponse, "tabSituationPoints" => $this->tabSituationPoints ,
             		"winPoints" => $this->winPoint, "loosePoints" => $this->loosePoint);
 
             //add situation to the gameFile

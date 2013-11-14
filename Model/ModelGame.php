@@ -210,14 +210,10 @@ XML;
     {
     	
         $game = simplexml_load_file($UserGameFile);
-
         foreach($game->situation as $item)
         {
-	
             if($item->situationCode == $idSituation)
             {
-            	//print_r($item);
-            	
                 $item["type"] = $arrayForm["situationType"];
                 $item->situationTitle = $arrayForm["situationTitle"];
                 $item->situationExposition = $arrayForm["situationExposition"];
@@ -225,8 +221,7 @@ XML;
 
                 for($i=0; $i < count($item->question->suivant->si->test); $i++)
                 {
-                    //$item->question->suivant->si->test[$i] = $arrayForm["answer".$i];
-                	$item->question->choix->rep[$i] = $arrayForm["situationReponse".$i];
+                	$item->question->choix->rep[$i] = $arrayForm["tabSituationReponses"][$i];
                 }
 
                 if($arrayForm["situationType"]=="Combat")
@@ -239,7 +234,7 @@ XML;
                 	//reprendre ici
                     for($i=0; $i < count($item->question->suivant->si->test); $i++)
                     {
-                        $item->question->suivant->si->test[$i]->points = $arrayForm["situationNbPoints".$i];
+                        $item->question->suivant->si->test[$i]->points = $arrayForm["tabSituationPoints"][$i];
                     }
                 }
 
