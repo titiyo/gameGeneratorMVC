@@ -8,6 +8,7 @@
  */
 require_once 'Framework/Controller.php';
 require_once 'Model/ModelGame.php';
+require_once 'Model/ModelUser.php';
 
 class ControllerGame extends Controller {
 
@@ -27,12 +28,15 @@ class ControllerGame extends Controller {
 
     private $tabSituationReponse;
     private $tabSituationPoints;
-    
+
+
     /**
      * Constructeur
      */
     public function __construct() {
         $this->modelGame = new ModelGame();
+        $this->modelUser = new ModelUser();
+
     }
 
     /**
@@ -355,7 +359,21 @@ class ControllerGame extends Controller {
 
     public function viewUserGame()
     {
-        echo "toto";
-        $this->generateView(array('character' =>$character, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate));
+        $userList=$this->modelUser->getUserList();
+        $gamesList = array();
+        foreach($userList as $user)
+        {
+            $login= $user->login;
+            $fileXml = "Content/xml/members/".$login."/userGames.xml";
+            if(file_exists($fileXml))
+            {
+                $gameFileXml = simplexml_load_file("Content/xml/members/".$login."/userGames.xml");
+                foreach($gameFileXml->jeu as $item)
+                {
+                    array_push($gamesList,array("title" => $item, "gameDetail" => $this->modelGame->gameDetails($user->login,$item)));
+                }
+            }
+        }
+        $this->generateView(array('gamesList' =>$gamesList));
     }
 }
