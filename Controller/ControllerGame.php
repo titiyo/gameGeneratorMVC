@@ -352,4 +352,10 @@ class ControllerGame extends Controller {
 
         $this->executeAction("Index");
     }
+
+    public function viewUserGame()
+    {
+        echo "toto";
+        $this->generateView(array('character' =>$character, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate));
+    }
 }

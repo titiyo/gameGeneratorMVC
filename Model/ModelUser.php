@@ -71,7 +71,7 @@ class ModelUser extends Model {
         foreach($this->fileXml->user as $usr)
         {
             if($usr->login==$login)
-                return array("lname"=> $usr->lname, "fname"=> $usr->fname,"login"=> $usr->login, "type" => $usr->attributes()->group,"mail"=>$usr->mail, "pwd"=>$usr->pwd);
+                return array("lname"=> $usr->lname, "fname"=> $usr->fname,"login"=> $usr->login, "type" => $usr->attributes()->group,"mail"=> $usr->mail, "pwd"=>$usr->pwd);
         }
         return null;
     }
@@ -83,7 +83,7 @@ class ModelUser extends Model {
             if($usr->login==$login)
             {
                 $usr->attributes()->group = $type;
-                $usr->email = $email;
+                $usr->mail = $email;
                 $usr->pwd = $pwd;
             }
         }

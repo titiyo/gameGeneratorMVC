@@ -1,12 +1,12 @@
 <?xml version="1.0" standalone="yes"?>
 <users>
-    <user group="admin">
+    <user group="member">
         <lname>julien</lname>
         <fname>breton</fname>
         <login>julienbreton</login>
         <pwd>test</pwd>
-        <mail>julien.breton@gmail.com</mail>
-    <email>julien.breton2@gmail.com</email></user>
+        <mail>j.breton@gmail.com</mail>
+    <email>julien.breton@gmail.com</email></user>
     <user group="member">
         <lname>Dupont</lname>
         <fname>Jean</fname>
