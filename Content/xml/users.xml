@@ -1,12 +1,12 @@
 <?xml version="1.0" standalone="yes"?>
 <users>
-    <user group="member">
+    <user group="admin">
         <lname>julien</lname>
         <fname>breton</fname>
         <login>julienbreton</login>
         <pwd>test</pwd>
         <mail>julien.breton@gmail.com</mail>
-    </user>
+    <email>julien.breton2@gmail.com</email></user>
     <user group="member">
         <lname>Dupont</lname>
         <fname>Jean</fname>
@@ -15,4 +15,3 @@
         <mail>dupont.jean@gmail.com</mail>
     </user>
 <user group="admin"><lname>bondeau</lname><fname>yohann</fname><login>y.bondeau</login><pwd>test</pwd><mail>y.bondeau@test.fr</mail></user></users>
-
