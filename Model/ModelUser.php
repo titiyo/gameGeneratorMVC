@@ -59,12 +59,35 @@ class ModelUser extends Model {
     public function getUserList()
     {
         $userList = array();
-        $i=0;
         foreach($this->fileXml->user as $usr)
         {
              array_push($userList, $usr);
         }
         return $userList;
+    }
+
+    public function getUserDetails($login)
+    {
+        foreach($this->fileXml->user as $usr)
+        {
+            if($usr->login==$login)
+                return array("lname"=> $usr->lname, "fname"=> $usr->fname,"login"=> $usr->login, "type" => $usr->attributes()->group,"mail"=>$usr->mail, "pwd"=>$usr->pwd);
+        }
+        return null;
+    }
+
+    public function modifUser($login, $type, $email, $pwd)
+    {
+        foreach($this->fileXml->user as $usr)
+        {
+            if($usr->login==$login)
+            {
+                $usr->attributes()->group = $type;
+                $usr->email = $email;
+                $usr->pwd = $pwd;
+            }
+        }
+        $this->fileXml->asXml("Content/xml/users.xml");
     }
 
 }

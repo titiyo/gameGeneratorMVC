@@ -5,7 +5,7 @@
             <?php if($userList != null): ?>
                     <?php foreach($userList as $user):?>
 
-                            <a href="Authentication/EditUser?userName=<?=$user->lname?>">
+                            <a href="Authentication/EditUser?userLogin=<?=$user->login?>">
                                 <?php echo "Utilisateur ".$user->lname." ".$user->fname?>
                             </a>
                             <label style="font-weight:bold;">Login : </label><?=$user->login?>
