@@ -4,9 +4,9 @@
         <lname>julien</lname>
         <fname>breton</fname>
         <login>julienbreton</login>
-        <pwd>test1</pwd>
+        <pwd>test</pwd>
         <mail>julien.breton@gmail.com</mail>
-    <email>julien.breton@gmail.com</email></user>
+    </user>
     <user group="member">
         <lname>Dupont</lname>
         <fname>Jean</fname>
@@ -14,4 +14,4 @@
         <pwd>test</pwd>
         <mail>dupont.jean@gmail.com</mail>
     </user>
-    <user group="member"><lname>bondeau</lname><fname>yohann</fname><login>y.bondeau</login><pwd>test</pwd><mail>y.bondeau@test.fr</mail></user><user group="admin"><lname>barreto</lname><fname>christophe</fname><login>barreto.christophe</login><pwd>test</pwd><mail>barreto.christophe@gmail.com</mail><email>barreto.christophe@gmail.com</email></user></users>
+<user group="member"><lname>bondeau</lname><fname>yohann</fname><login>y.bondeau</login><pwd>test</pwd><mail>y.bondeau@test.fr</mail></user></users>

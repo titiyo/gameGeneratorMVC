@@ -68,6 +68,7 @@ XML;
 
         $fileName = $fileGameDirectory."/fileGame_".$login."_".$createDate.".xml";
         $xml->asXml($fileName);
+        return $fileName;
     }
 
     public function createFileCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $escPoint)
@@ -120,15 +121,18 @@ XML;
         return $games;
     }
 
-    public function getAllSituations($gameFilePath)
+    public function getAllSituations($gameFilePath, $idSituation)
     {
         $game = simplexml_load_file($gameFilePath);
         $situations = array();
 
         foreach($game->situation as $item)
         {
-            $situation = array("type" => $item["type"], "title" => $item->situationTitle, "idSituation" => $item->situationCode);
-            array_push($situations, $situation);
+        	if($idSituation != $item->situationCode)
+        	{
+        		$situation = array("type" => $item["type"], "title" => $item->situationTitle, "idSituation" => $item->situationCode);
+        		array_push($situations, $situation);
+        	}
         }
         return $situations;
     }
@@ -188,7 +192,7 @@ XML;
                     array_push($points, $b->points);
                 }
 
-                $situationsMap = $this->getAllSituations($gameFilePath);
+                $situationsMap = $this->getAllSituations($gameFilePath, $idSituation);
                 
                 return array("type" => $item["type"], "title" => $item->situationTitle, "code" => $item->situationCode, "exposition" => $item->situationExposition
                     , "question" => $item->question->label, "answers" => $answer, "points" => $points, "situationsMap" => $situationsMap, "idSituation" => $idSituation);
@@ -219,10 +223,28 @@ XML;
                 $item->situationExposition = $arrayForm["situationExposition"];
                 $item->question->label =  $arrayForm["situationQuestion"];
 
-                for($i=0; $i < count($item->question->suivant->si->test); $i++)
+                
+                while(count($item->question->choix->rep) > count($arrayForm["tabSituationReponses"]))
                 {
-                	$item->question->choix->rep[$i] = $arrayForm["tabSituationReponses"][$i];
+                	unset($item->question->choix->rep);
                 }
+           
+                for($i = 0; $i < count($arrayForm["tabSituationReponses"]); $i++)
+                {
+                	if(count($item->question->choix->rep) >= $i)
+                	{
+                		// Modification
+                		$item->question->choix->rep[$i] = $arrayForm["tabSituationReponses"][$i];
+                	}
+                	else 
+                	{
+                		//Création
+                		$rep = $item->question->choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
+                		$rep->addAttribute("val", $i);
+                	}
+                }
+                
+                
 
                 if($arrayForm["situationType"]=="Combat")
                 {
@@ -231,10 +253,26 @@ XML;
                 }
                 else
                 {
-                	//reprendre ici
-                    for($i=0; $i < count($item->question->suivant->si->test); $i++)
+                	while(count($item->question->suivant->si->test) > count($arrayForm["tabSituationPoints"]))
+                	{
+                		unset($item->question->suivant->si->test);
+                	}
+                    for($i=0; $i < count($arrayForm["tabSituationPoints"]); $i++)
                     {
-                        $item->question->suivant->si->test[$i]->points = $arrayForm["tabSituationPoints"][$i];
+                    	if(count($item->question->suivant->si->test) >= $i)
+                    	{
+                    		// Modification
+                    		$item->question->suivant->si->test[$i]->points = $arrayForm["tabSituationPoints"][$i];
+                    	}
+                    	else
+                    	{
+                    		//Création
+                    		$test = $item->question->suivant->si->addChild("test");
+			                $test->addAttribute("val",$i);
+			
+			                $test->addChild("points", $arrayForm["tabSituationPoints"][$i]);
+			                $test->addChild("code", "0");
+                    	}                        
                     }
                 }
 
@@ -295,7 +333,7 @@ XML;
             for($i = 0; $i < count($arrayForm["tabSituationPoints"]) ; $i++)
             {
                 $test = $si->addChild("test");
-                $test->addAttribute("val","2");
+                $test->addAttribute("val",$i);
 
                 $test->addChild("points", $arrayForm["tabSituationPoints"][$i]);
                 $test->addChild("code", "0");
@@ -394,4 +432,6 @@ XML;
         }
         $xmlFile->asXml("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
     }
+    
+
 }

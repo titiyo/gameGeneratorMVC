@@ -78,11 +78,13 @@
         tdPoints.appendChild(labelPoints);
         tdPoints.appendChild(pointInput);
 
-        var tdDeleteAnswer = document.createElement("input");
-        tdDeleteAnswer.setAttribute("type","button");
-        tdDeleteAnswer.setAttribute("value","Supprimer la réponse");
-        tdDeleteAnswer.setAttribute("onclick","deleteAnswer(this)");
-
+        var tdDeleteAnswer = document.createElement("td");
+		var inputDelete = document.createElement("input");
+		inputDelete.setAttribute("type","button");
+		inputDelete.setAttribute("value","Supprimer la réponse");
+		inputDelete.setAttribute("onclick","deleteAnswer(this)");
+        tdDeleteAnswer.appendChild(inputDelete);
+        
         tr.appendChild(tdAnswer);
         tr.appendChild(tdPoints);
         tr.appendChild(tdDeleteAnswer);
@@ -92,7 +94,7 @@
 
     function deleteAnswer(trNode)
     {
-        var trToDelete = trNode.parentNode;
+        var trToDelete = trNode.parentNode.parentNode;
 
         trToDelete.parentNode.removeChild(trToDelete);
 
@@ -154,7 +156,11 @@
                     <label>Nbr points : </label>
                     <input type="text" name="situationNbPoint[<?=$i?>]" style="width:90%;" value="<?=$situation["points"][$i]?>"/>
                 </td>
-            </tr>
+                <?php if($i!=0):?>
+	                <td>
+	                     <input type="button" value="Suppression d'une réponse" onclick="deleteAnswer(this);" />
+	                </td>
+                <?php endif;?>
         <?php endfor; ?>
     <?php else: ?>
         <tr class="answerSituation">
@@ -166,10 +172,22 @@
                 <label>Nbr points : </label>
                 <input type="text" name="situationNbPoint[0]" style="width:90%;"/>
             </td>
-        </tr>
-    <?php endif; ?>
-
+    <?php endif; ?>	  
+    <?php if(!empty($situation["situationsMap"])):?>
+    	<td>
+    		<label>Mapping1:</label>
+    		<select name="mappingSituation" style="width:90%;">
+    			<option value="1">Situation Fin</option>
+    			<?php for($i = 0; $i < count($situation["situationsMap"]); $i++):?>
+					<option value="<?=$situation["situationsMap"][$i]["code"]?>"><?=$situation["situationsMap"][$i]["title"]?></option>	
+				<?php endfor;?>
+			</select>
+    	</td>
+     <?php endif;?>
+     </tr> 
 </table>
 <input type="hidden" name="gameTitle" value="<?=$gameTitle?>" />
 <input type="hidden" name="createDate" value="<?=$createDate?>" />
 <input type="hidden" name="idSituation" value="<?=$situation["idSituation"]?>" />
+
+<input type="button" value="Ajout d'une réponse" onclick="addAnswer();" />
