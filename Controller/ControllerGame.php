@@ -28,6 +28,8 @@ class ControllerGame extends Controller {
     private $tabSituationReponse;
     private $tabSituationPoints;
     
+    private $enemyCharacter;
+    
     /**
      * Constructeur
      */
@@ -174,9 +176,11 @@ class ControllerGame extends Controller {
         $situation = array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
         $maxResponse = 3;
 
+        $characters = $this->modelGame->getCharacterByType($this->gameTitle, "E");
+        
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate
-                                  ,'situation' => $situation));
+                                  ,'situation' => $situation, 'characters' => $characters));
     }
 
     public function createSituations()
@@ -194,6 +198,8 @@ class ControllerGame extends Controller {
 
     	$this->gameTitle = $this->request->getParameter("gameTitle");
         $this->createDate = $this->request->getParameter("createDate");
+        
+        $this->enemyCharacter = $this->request->getParameter("enemyCharacter");
 
     	if($this->situationType != null && $this->situationTitle != null && $this->situationExposition != null && $this->situationQuestion != null)
     	{
@@ -205,7 +211,7 @@ class ControllerGame extends Controller {
 
     		$arrayForm = array("situationType" => $this->situationType, "situationTitle" => $this->situationTitle, "situationExposition" => $this->situationExposition,
                 "situationQuestion" => $this->situationQuestion, "tabSituationReponses" => $this->tabSituationReponse, "tabSituationPoints" => $this->tabSituationPoints,
-                "winPoints" => $this->winPoint, "loosePoints" =>$this->loosePoint);
+                "winPoints" => $this->winPoint, "loosePoints" =>$this->loosePoint, "enemyCharacter" => $this->enemyCharacter);
 
     		//add situation to the gameFile
     		$this->modelGame->addSituationInGameFile($gameFile, $arrayForm);
@@ -232,6 +238,7 @@ class ControllerGame extends Controller {
         if(file_exists($gameFile))
         {
             $situation = $this->modelGame->situationDetails($gameFile ,$this->idSituation);
+            $characters = $this->modelGame->getCharacterByType($this->gameTitle, "E");
         }
 
         $types = array(
@@ -243,12 +250,12 @@ class ControllerGame extends Controller {
 
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate,
-                                  'situation' => $situation));
+                                  'situation' => $situation, 'characters' => $characters));
     }
 
     public function editSituations()
     {
-        //récupérer les données du form
+    	//récupérer les données du form
         $this->situationType = $this->request->getParameter("type");
         $this->situationTitle = $this->
         request->getParameter("situationTitle");
@@ -267,6 +274,9 @@ class ControllerGame extends Controller {
 
         $this->gameTitle = $this->request->getParameter("gameTitle");
         $this->createDate = $this->request->getParameter("createDate");
+        
+        $this->enemyCharacter = $this->request->getParameter("enemyCharacter");
+        
 
         if($this->situationType != null && $this->situationTitle!=null && $this->situationExposition!=null && $this->situationQuestion!=null)
         {
@@ -279,7 +289,8 @@ class ControllerGame extends Controller {
             $arrayForm = array("situationType" => $this->situationType, "situationTitle" =>$this->situationTitle,
             		"situationExposition" => $this->situationExposition, "situationQuestion" => $this->situationQuestion,
             		"tabSituationReponses" => $this->tabSituationReponse, "tabSituationPoints" => $this->tabSituationPoints ,
-            		"winPoints" => $this->winPoint, "loosePoints" => $this->loosePoint,"situationMapping" => $this->situationMapping);
+            		"winPoints" => $this->winPoint, "loosePoints" => $this->loosePoint,"situationMapping" => $this->situationMapping, 
+            		"enemyCharacter" => $this->enemyCharacter);
 
             //add situation to the gameFile
             $this->modelGame->editSituationInGameFile($gameFile, $arrayForm, $this->idSituation);

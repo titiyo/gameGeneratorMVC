@@ -223,8 +223,8 @@ XML;
 
     public function editSituationInGameFile($UserGameFile, $arrayForm, $idSituation)
     {
-    	
-        $game = simplexml_load_file($UserGameFile);
+    	print_r($arrayForm);
+    	$game = simplexml_load_file($UserGameFile);
         foreach($game->situation as $item)
         {
             if($item->situationCode == $idSituation)
@@ -234,6 +234,8 @@ XML;
                 $item->situationExposition = $arrayForm["situationExposition"];
                 $item->question->label =  $arrayForm["situationQuestion"];
 
+               
+                                                
                 while(count($item->question->choix->rep) > count($arrayForm["tabSituationReponses"]))
                 {
                 	unset($item->question->choix->rep);
@@ -251,10 +253,16 @@ XML;
                 		//Cr�ation
                 		$rep = $item->question->choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
                 		$rep->addAttribute("val", $i);
-                	}
+                		
+                   	}
                 }
+                
                 if($arrayForm["situationType"]=="Combat")
                 {
+                	echo("go");
+                	echo($arrayForm["enemyCharacter"]);
+                	$item->ennemi = $arrayForm["enemyCharacter"];
+                	
                     $item->question->suivant->si->test->si->test[0]->pointsVictoire = $arrayForm["winPoints"];
                     $item->question->suivant->si->test->si->test[0]->code = $arrayForm["situationMapping"][0];
                     $item->question->suivant->si->test->si->test[1]->pointsDefaite = $arrayForm["loosePoints"];
@@ -265,9 +273,7 @@ XML;
                 }
                 else
                 {
-                    print_r($arrayForm);
-
-                	while(count($item->question->suivant->si->test) > count($arrayForm["tabSituationPoints"]))
+                   	while(count($item->question->suivant->si->test) > count($arrayForm["tabSituationPoints"]))
                 	{
                 		unset($item->question->suivant->si->test);
                 	}
@@ -313,7 +319,7 @@ XML;
 
     	if($arrayForm["situationType"] == "Combat")
     	{
-    		$situation->addChild("ennemi",0);
+    		$situation->addChild("ennemi",$arrayForm["enemyCharacter"]);
     	}
 
     	$question = $situation->addChild("question");
@@ -399,6 +405,7 @@ XML;
         $characteristic->addChild('attaque', $atkPoint);
         $characteristic->addChild('initiative', $iniPoint);
         $xmlFile->asXML($gameDir.$gameTitle."Characters.xml");
+        
 
         $dom = dom_import_simplexml($xmlFile)->ownerDocument;
         $dom->formatOutput = true;
@@ -457,5 +464,18 @@ XML;
         $xmlFile->asXml("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
     }
     
+    public function getCharacterByType($gameTitle,$characterType)
+    {
+    	$xmlFile = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
+    	$characters = $xmlFile->xpath("/personnages/personnage[@type='".$characterType."']");
+    	
+    	$tabCharacters = array();
+    	foreach($characters as $character)
+    	{
+   			$characterTab = array("name" => $character->nom);
+   			array_push($tabCharacters, $characterTab);
+    	}
+    	return $tabCharacters;
+    }
 
 }
