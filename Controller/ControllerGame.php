@@ -28,14 +28,9 @@ class ControllerGame extends Controller {
 
     private $tabSituationReponse;
     private $tabSituationPoints;
-<<<<<<< HEAD
-    
+
     private $enemyCharacter;
-    
-=======
 
-
->>>>>>> 9004a8df32f252a407e5e2049fe5453e53be6b96
     /**
      * Constructeur
      */
@@ -329,7 +324,7 @@ class ControllerGame extends Controller {
         $this->lifePoint = $this->request->getParameter("lifePoint");
         $this->defPoint = $this->request->getParameter("defPoint");
         $this->atkPoint = $this->request->getParameter("atkPoint");
-        $this->escPoint = $this->request->getParameter("escPoint");
+        $this->escPoint = $this->request->getParameter("iniPoint");
         $login = $_SESSION["login"];
         $fileGameDirectory = "Content/xml/members/".$login."/".$this->gameTitle."/";
 

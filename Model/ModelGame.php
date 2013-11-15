@@ -20,8 +20,8 @@ class ModelGame extends Model {
     public function createUserFileGame($UserGameFile)
     {
         $stringxml = <<<XML
-<?xml version='1.0'?>
-<jeux>
+<?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
+<jeux xmlns="http://userGames.org" xsi:schemaLocation="http://userGames.org /Content/xsd/userGames.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 </jeux>
 XML;
 
@@ -53,8 +53,8 @@ XML;
     public function createFileGame($fileGameDirectory, $id, $createDate, $gameTitle, $description, $difficulty, $login)
     {
         $stringxml = <<<XML
-<?xml version='1.0'?>
-<jeu>
+<?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
+<jeu xmlns="http://game.org" xsi:schemaLocation="http://game.org /Content/xsd/game.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <id>$id</id>
     <datecreation>$createDate</datecreation>
     <nbsituation>0</nbsituation>
@@ -75,8 +75,8 @@ XML;
     public function createFileCharacter($gameDir, $gameTitle, $charName, $charType, $lifePoint, $defPoint, $atkPoint, $escPoint)
     {
         $stringxml = <<<XML
-<?xml version='1.0'?>
-<personnages>
+<?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
+<personnages xmlns="http://Characters.org" xsi:schemaLocation="http://Characters.org /Content/xsd/Characters.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <personnage type="$charType">
         <nom>$charName</nom>
         <caracteristiques>
