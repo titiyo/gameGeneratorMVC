@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="jeu" type="jeuType"/>
+
+   <xs:complexType name="jeuType">
+     <xs:sequence>
+        <xs:element type="xs:unsignedInt" name="id"/>
+        <xs:element type="xs:date" name="datecreation"/>
+        <xs:element type="xs:int" name="nbsituation"/>
+        <xs:element type="xs:string" name="titre"/>
+        <xs:element type="xs:string" name="createur"/>
+        <xs:element type="xs:string" name="description"/>
+        <xs:element type="xs:string" name="difficulte"/>
+        <xs:element type="situationType" name="situation" maxOccurs="unbounded" minOccurs="0"/>
+     </xs:sequence>
+   </xs:complexType>
+
+   <xs:complexType name="situationType">
+       <xs:sequence>
+           <xs:element type="xs:unsignedInt" name="situationCode"/>
+           <xs:element type="xs:string" name="situationTitle"/>
+           <xs:element type="xs:string" name="situationExposition"/>
+           <xs:element type="xs:string" name="ennemi" minOccurs="0"/>
+           <xs:element type="questionType" name="question"/>
+       </xs:sequence>
+       <xs:attribute type="xs:string" name="type" use="optional"/>
+   </xs:complexType>
+
+    <xs:complexType name="questionType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="label"/>
+            <xs:element type="choixType" name="choix"/>
+            <xs:element type="suivantType" name="suivant"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="choixType">
+        <xs:sequence>
+            <xs:element type="repType" name="rep" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="repType">
+        <xs:simpleContent>
+            <xs:extension base="xs:int">
+                <xs:attribute type="xs:int" name="val" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="suivantType">
+        <xs:sequence>
+            <xs:element type="siType" name="si"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="siType">
+      <xs:sequence>
+        <xs:element type="testType" name="test" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+
+  <xs:complexType name="testType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="xs:int" name="points"/>
+      <xs:element type="xs:unsignedInt" name="code"/>
+      <xs:element type="xs:int" name="pointsVictoire" minOccurs="0"/>
+      <xs:element type="xs:int" name="pointsDefaite" minOccurs="0"/>
+      <xs:element type="siType" name="si" minOccurs="0"/>
+    </xs:choice>
+    <xs:attribute type="xs:int" name="val" use="optional"/>
+    <xs:attribute type="xs:int" name="vieEnnemi" use="optional"/>
+    <xs:attribute type="xs:int" name="vieHeros" use="optional"/>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="personnages" type="personnagesType"/>
+  <xs:complexType name="personnageType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="nom"/>
+      <xs:element type="caracteristiquesType" name="caracteristiques"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="type" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="personnagesType">
+    <xs:sequence>
+      <xs:element type="personnageType" name="personnage" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="caracteristiquesType">
+    <xs:sequence>
+      <xs:element type="xs:int" name="vie"/>
+      <xs:element type="xs:int" name="defense"/>
+      <xs:element type="xs:int" name="attaque"/>
+      <xs:element type="xs:int" name="initiative"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

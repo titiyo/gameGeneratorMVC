@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="users" type="usersType"/>
+  <xs:complexType name="usersType">
+    <xs:sequence>
+      <xs:element type="userType" name="user" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="userType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="lname"/>
+      <xs:element type="xs:string" name="fname"/>
+      <xs:element type="xs:string" name="login"/>
+      <xs:element type="xs:string" name="pwd"/>
+      <xs:element type="xs:string" name="mail"/>
+      <xs:element type="xs:string" name="email"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="group" use="required"/>
+  </xs:complexType>
+</xs:schema>
