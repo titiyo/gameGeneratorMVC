@@ -165,6 +165,16 @@
         </td>
     </tr>
     <tr>
+    	<td>
+    		<label>Ennemi choisi :</label>
+    		<select name="enemyCharacter">
+        	<?php for($i=0; $i<count($characters);$i++):?>
+        		<option value="<?=$characters[$i]["name"]?>"><?=$characters[$i]["name"]?></option>
+        	<?php endfor;?>
+        </select>
+    	</td>
+    </tr>
+    <tr>
         <td colspan="2">
             <label>Titre : </label>
             <input type="text" name="situationTitle" style="width:90%;" value="<?=$situation["title"]?>"/>
