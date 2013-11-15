@@ -14,7 +14,22 @@ class ModelUser extends Model {
     private $fileXml;
 
     public function __construct() {
-        $this->fileXml = simplexml_load_file("Content/xml/users.xml");
+        if(file_exists("Content/xml/users.xml"))
+        {
+            $this->fileXml = simplexml_load_file("Content/xml/users.xml");
+        }
+        else
+        {
+            $stringxml = <<<XML
+<?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
+<users xmlns="http://users.org" xsi:schemaLocation="http://users.org /Content/xsd/users.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+</users>
+XML;
+
+            $xml = simplexml_load_string($stringxml);
+            $xml->asXml("Content/xml/users.xml");
+        }
     }
 
     /**

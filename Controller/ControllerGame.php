@@ -136,7 +136,7 @@ class ControllerGame extends Controller {
             $gameFileName = $this->modelGame->createFileGame($fileGameDirectory, $id, $this->createDate, $this->gameTitle ,$this->description, $this->difficulty, $login);
 
             $arrayForm = array("situationType" => "Debut", "situationTitle" => "A modifier", "situationExposition" => "A modifier",
-                "situationQuestion" => "A modifier", "tabSituationReponses" => array("A modifier"), "tabSituationPoints" => array("A modifier"),
+                "situationQuestion" => "A modifier", "tabSituationReponses" => array("A modifier"), "tabSituationPoints" => array("0"),
                 "winPoint" => "", "loosePoint" =>"");
             
             $this->modelGame->addSituationInGameFile($gameFileName, $arrayForm);
@@ -179,7 +179,14 @@ class ControllerGame extends Controller {
         $situation = array("title" => null, "code" => null, "exposition" => null, "question" => null, "answers" => array(), "points" => array());
         $maxResponse = 3;
 
-        $characters = $this->modelGame->getCharacterByType($this->gameTitle, "E");
+        $rootDirectory = "Content/xml/Members/".$_SESSION["login"];
+        $fileGameDirectory = $rootDirectory . "/" . $this->gameTitle. "/";
+        $charactersFilePath = $fileGameDirectory.$this->gameTitle."Characters.xml";
+        $characters = null;
+        if(file_exists($charactersFilePath))
+        {
+            $characters = $this->modelGame->getCharacterByType($charactersFilePath, "E");
+        }
         
         // Return the form with data
         $this->generateView(array('types' => $types, 'maxResponse' => $maxResponse, 'gameTitle' => $this->gameTitle, 'createDate' => $this->createDate
@@ -241,7 +248,13 @@ class ControllerGame extends Controller {
         if(file_exists($gameFile))
         {
             $situation = $this->modelGame->situationDetails($gameFile ,$this->idSituation);
-            $characters = $this->modelGame->getCharacterByType($this->gameTitle, "E");
+        }
+
+        $charactersFilePath = $fileGameDirectory.$this->gameTitle."Characters.xml";
+        $characters = null;
+        if(file_exists($charactersFilePath))
+        {
+            $characters = $this->modelGame->getCharacterByType($charactersFilePath, "E");
         }
 
         $types = array(

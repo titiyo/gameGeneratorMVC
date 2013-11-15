@@ -119,7 +119,6 @@ XML;
                 array_push($games, $game);
             }
         }
-        //print_r($games);
         return $games;
     }
 
@@ -142,7 +141,7 @@ XML;
     public function gameDetails($login, $nameGame)
     {
         $gameDir ="Content/xml/members/".$login."/".$nameGame."/";
-        //echo $gameDir."<br>";
+
         $root = scandir($gameDir,1);
         $detailTab=null;
         foreach($root as $value)
@@ -226,7 +225,6 @@ XML;
 
     public function editSituationInGameFile($UserGameFile, $arrayForm, $idSituation)
     {
-    	print_r($arrayForm);
     	$game = simplexml_load_file($UserGameFile);
         foreach($game->situation as $item)
         {
@@ -262,8 +260,6 @@ XML;
                 
                 if($arrayForm["situationType"]=="Combat")
                 {
-                	echo("go");
-                	echo($arrayForm["enemyCharacter"]);
                 	$item->ennemi = $arrayForm["enemyCharacter"];
                 	
                     $item->question->suivant->si->test->si->test[0]->pointsVictoire = $arrayForm["winPoints"];
@@ -330,7 +326,6 @@ XML;
 
     	$choix = $question->addChild("choix");
 
-        print_r($arrayForm["tabSituationReponses"]);
         for($i = 0; $i < count($arrayForm["tabSituationReponses"]) ; $i++)
         {
             $rep = $choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
@@ -467,16 +462,18 @@ XML;
         $xmlFile->asXml("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
     }
     
-    public function getCharacterByType($gameTitle,$characterType)
+    public function getCharacterByType($characterFilePath,$characterType)
     {
-    	$xmlFile = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
-    	$characters = $xmlFile->xpath("/personnages/personnage[@type='".$characterType."']");
-    	
+    	$xmlFile = simplexml_load_file($characterFilePath);
+    	//$characters = $xmlFile->xpath("personnage[@type='".$characterType."']");
     	$tabCharacters = array();
-    	foreach($characters as $character)
+    	foreach($xmlFile->personnage as $character)
     	{
-   			$characterTab = array("name" => $character->nom);
-   			array_push($tabCharacters, $characterTab);
+            if($character["type"] == 'E')
+            {
+                $characterTab = array("name" => $character->nom);
+                array_push($tabCharacters, $characterTab);
+            }
     	}
     	return $tabCharacters;
     }
