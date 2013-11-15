@@ -115,7 +115,7 @@ XML;
 
             foreach($gameFileXml->jeu as $item)
             {
-                $game = array("title" => $item, "gameDetail" => $this->gameDetails($item));
+                $game = array("title" => $item, "gameDetail" => $this->gameDetails($_SESSION["login"],$item));
                 array_push($games, $game);
             }
         }
@@ -139,9 +139,9 @@ XML;
         return $situations;
     }
 
-    public function gameDetails($nameGame)
+    public function gameDetails($login, $nameGame)
     {
-        $gameDir ="Content/xml/members/".$_SESSION["login"]."/".$nameGame."/";
+        $gameDir ="Content/xml/members/".$login."/".$nameGame."/";
         //echo $gameDir."<br>";
         $root = scandir($gameDir,1);
         $detailTab=null;
@@ -151,9 +151,9 @@ XML;
             {
                 if(strpos($value, "fileGame")!== false)
                 {
-                    $detailGame = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$value);
+                    $detailGame = simplexml_load_file("Content/xml/members/".$login."/".$nameGame."/".$value);
 
-                    $pathCharacters = "Content/xml/members/".$_SESSION["login"]."/".$nameGame."/".$nameGame."Characters.xml";
+                    $pathCharacters = "Content/xml/members/".$login."/".$nameGame."/".$nameGame."Characters.xml";
                     $countChar = 0;
                     if(file_exists($pathCharacters))
                     {
@@ -161,6 +161,7 @@ XML;
                         $reqXpath = $charGame-> xpath("/personnages/personnage");
                         $countChar = count($reqXpath);
                     }
+
                     return array("creationDate"=> $detailGame->datecreation,
                     "title"=>$detailGame->titre,
                     "creator"=>$detailGame->createur,
@@ -168,7 +169,9 @@ XML;
                     "description"=>$detailGame->description,
                     "difficulty"=>$detailGame->difficulte,
                     "nbCharacter"=>$countChar);
+
                 }
+
             }
         }
         return null;
