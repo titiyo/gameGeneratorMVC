@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<users xmlns="http://users.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://users.org /Content/xsd/users.xsd">
-
-<user group="member"><lname>bondeau</lname><fname>yohann</fname><login>bondeau.yohann</login><pwd>281091</pwd><mail>bondeau.yohann@gmail.com</mail></user></users>
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<users xmlns="http://users.org"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://users.org /Content/xsd/users.xsd">
+  <user group="member">
+    <lname>bondeau</lname>
+    <fname>yohann</fname>
+    <login>bondeau.yohann</login>
+    <pwd>281091</pwd>
+    <mail>bondeau.yohann@gmail.com</mail>
+  </user>
+  <user group="member">
+    <lname>julien</lname>
+    <fname>breton</fname>
+    <login>julien.breton</login>
+    <pwd>juju</pwd>
+    <mail>julien.breton@gmail.com</mail>
+  </user>
+</users>

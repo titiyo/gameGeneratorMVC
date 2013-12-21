@@ -51,6 +51,9 @@
                                 <ul class="nav">
                                     <li class="active"><a href="game/viewGame">Voir mes jeux</a></li>
                                 </ul>
+                                <ul class="nav">
+                                    <li class="active"><a href="game/viewGame">Game panel</a></li>
+                                </ul>
                                 <?php if(isset($_SESSION["group"]) && $_SESSION["group"]=="admin"): ?>
                                     <ul class="nav">
                                         <li class="dropdown">

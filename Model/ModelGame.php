@@ -76,7 +76,7 @@ XML;
     {
         $stringxml = <<<XML
 <?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
-<personnages xmlns="http://Characters.org" xsi:schemaLocation="http://Characters.org /Content/xsd/Characters.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<personnages xsi:schemaLocation="http://Characters.org /Content/xsd/Characters.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <personnage type="$charType">
         <nom>$charName</nom>
         <caracteristiques>
@@ -433,6 +433,7 @@ XML;
     {
         $xmlFile = simplexml_load_file("Content/xml/members/".$_SESSION["login"]."/".$gameTitle."/".$gameTitle."Characters.xml");
         $char = $xmlFile->xpath("personnage[nom='$charName']");
+        //$typeChar = $char[0]->xpath("@type");
         $typeChar = $char[0]->xpath("@type");
 
         return array("nom"=> $charName,
