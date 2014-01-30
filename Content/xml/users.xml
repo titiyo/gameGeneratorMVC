@@ -16,4 +16,11 @@ xsi:schemaLocation="http://users.org /Content/xsd/users.xsd">
     <pwd>juju</pwd>
     <mail>julien.breton@gmail.com</mail>
   </user>
+  <user group="member">
+    <lname>herbelin</lname>
+    <fname>benjamin</fname>
+    <login>herbelin.benjamin</login>
+    <pwd>benj</pwd>
+    <mail>benj@gmail.com</mail>
+  </user>
 </users>

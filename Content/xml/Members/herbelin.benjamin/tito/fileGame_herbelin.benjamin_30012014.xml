@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<jeu xmlns="http://game.org"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://game.org /Content/xsd/game.xsd">
+  <id>52ea67c580864</id>
+  <datecreation>30012014</datecreation>
+  <nbsituation>2</nbsituation>
+  <titre>tito</titre>
+  <createur>herbelin.benjamin</createur>
+  <description>il court il court</description>
+  <difficulte>3</difficulte>
+  <situation type="Narration">
+    <situationCode>52ea67c58183c</situationCode>
+    <situationTitle>A modifier</situationTitle>
+    <situationExposition>A modifier</situationExposition>
+    <question>
+      <label>A modifier</label>
+      <choix>
+        <rep val="0">A modifier</rep>
+        <rep val="1">reponse1</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>0</points>
+            <code>52ea68472f155</code>
+          </test>
+          <test val="1">
+            <points>10</points>
+            <code>1</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Narration">
+    <situationCode>52ea68472f155</situationCode>
+    <situationTitle>Rue</situationTitle>
+    <situationExposition>on se balade dans la
+    rue</situationExposition>
+    <question>
+      <label>Que voulez-vous faire?</label>
+      <choix>
+        <rep val="0">aller rue de paris</rep>
+        <rep val="1">aller rue de la paix</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>10</points>
+            <code>0</code>
+          </test>
+          <test val="1">
+            <points>20</points>
+            <code>0</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+</jeu>

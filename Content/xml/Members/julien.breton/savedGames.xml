@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<saves xmlns="http://userGames.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://userGames.org /Content/xsd/userGames.xsd">
+	<save>
+		<jeu>SeigneurDesAnneaux</jeu>
+		<date>29-01-2014 22:10</date>
+		<idSituationCourante>52be9a0688baf</idSituationCourante>
+		<score>20</score>
+		<vieHeros>100</vieHeros>
+	  </save>
+	<save>
+		<jeu>SeigneurDesAnneaux</jeu>
+		<date>29-01-2014 22:14</date>
+		<idSituationCourante>52be9a0688baf</idSituationCourante>
+		<score>20</score>
+		<vieHeros>100</vieHeros>
+	  </save>
+	<save>
+		<jeu>SeigneurDesAnneaux</jeu>
+		<date>30-01-2014 01:06</date>
+		<idSituationCourante>52be990d1736f</idSituationCourante>
+		<score>0</score>
+		<vieHeros>100</vieHeros>
+	  </save>
+</saves>

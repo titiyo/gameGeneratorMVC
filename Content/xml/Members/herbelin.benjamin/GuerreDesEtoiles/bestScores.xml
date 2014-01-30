@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><scores xmlns="http://userGames.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://userGames.org /Content/xsd/userGames.xsd">
+  <score>
+    <joueur>herbelin.benjamin</joueur>
+    <points>100</points>
+  </score>
+  <score>
+    <joueur>herbelin.benjamin</joueur>
+    <points>210</points>
+  </score>
+  <score>
+    <joueur>herbelin.benjamin</joueur>
+    <points>120</points>
+  </score>
+  <score>
+    <joueur>herbelin.benjamin</joueur>
+    <points>130</points>
+  </score>
+  <score>
+    <joueur>herbelin.benjamin</joueur>
+    <points>140</points>
+  </score>
+</scores>

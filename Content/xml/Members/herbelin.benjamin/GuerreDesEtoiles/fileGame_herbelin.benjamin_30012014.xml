@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<jeu xmlns="http://game.org"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://game.org /Content/xsd/game.xsd">
+  <id>52ea28a47a9bf</id>
+  <datecreation>30012014</datecreation>
+  <nbsituation>4</nbsituation>
+  <titre>GuerreDesEtoiles</titre>
+  <createur>herbelin.benjamin</createur>
+  <description>il court il court</description>
+  <difficulte>1</difficulte>
+  <situation type="Narration">
+    <situationCode>52ea28a484f0f</situationCode>
+    <situationTitle>Tatooine</situationTitle>
+    <situationExposition>Vous etes sur
+    Tatooine</situationExposition>
+    <question>
+      <label>Que voulz-vous faire?</label>
+      <choix>
+        <rep val="0">Rentrer dans la cantina</rep>
+        <rep val="1">Rentrer chez vous</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>10</points>
+            <code>52ea29491db18</code>
+          </test>
+          <test>
+            <points>10</points>
+            <code>52ea29b2ec7e6</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Combat">
+    <situationCode>52ea29491db18</situationCode>
+    <situationTitle>Combat Cantina</situationTitle>
+    <situationExposition>Un Dark Vador sauvage
+    apparait!</situationExposition>
+    <ennemi>Dark Vador</ennemi>
+    <question>
+      <label>Que voulez-vous faire?</label>
+      <choix>
+        <rep val="0">Attaquer</rep>
+        <rep val="1">Prendre la fuite</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <si>
+              <test vieEnnemi="0">
+                <code>52ea298bee641</code>
+                <pointsVictoire>100</pointsVictoire>
+              </test>
+              <test vieHeros="0">
+                <code>1</code>
+                <pointsDefaite>50</pointsDefaite>
+              </test>
+            </si>
+          </test>
+          <test val="1">
+            <code>52ea28a484f0f</code>
+            <points>2</points>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Narration">
+    <situationCode>52ea298bee641</situationCode>
+    <situationTitle>Victoire cantina</situationTitle>
+    <situationExposition>Vous avez vaincu le Dark Vador
+    ennemi!</situationExposition>
+    <question>
+      <label>Que voulez-vous faire?</label>
+      <choix>
+        <rep val="0">Sauter dans la fosse du Sarlac</rep>
+        <rep val="1">Faire exploser R2-D2</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>100</points>
+            <code>0</code>
+          </test>
+          <test val="1">
+            <points>100</points>
+            <code>0</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Narration">
+    <situationCode>52ea29b2ec7e6</situationCode>
+    <situationTitle>Situation maison</situationTitle>
+    <situationExposition>Vous arrivez chez
+    vous</situationExposition>
+    <question>
+      <label>Que voulez-vous faire?</label>
+      <choix>
+        <rep val="0">Terminer le jeu</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>200</points>
+            <code>1</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+</jeu>

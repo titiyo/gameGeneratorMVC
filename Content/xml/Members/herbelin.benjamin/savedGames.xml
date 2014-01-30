@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<saves xmlns="http://userGames.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://userGames.org /Content/xsd/userGames.xsd">
+<save>
+    <jeu>GuerreDesEtoiles</jeu>
+    <date>30-01-2014 11:33</date>
+    <idSituationCourante>52ea29b2ec7e6</idSituationCourante>
+    <score>10</score>
+    <vieHeros>100</vieHeros>
+  </save>
+<save>
+    <jeu>GuerreDesEtoiles</jeu>
+    <date>30-01-2014 15:47</date>
+    <idSituationCourante>52ea29b2ec7e6</idSituationCourante>
+    <score>10</score>
+    <vieHeros>100</vieHeros>
+  </save>
+<save>
+    <jeu>SeigneurDesAnneaux</jeu>
+    <date>30-01-2014 15:49</date>
+    <idSituationCourante>52be9aa843f18</idSituationCourante>
+    <score>60</score>
+    <vieHeros>80</vieHeros>
+  </save>
+</saves>

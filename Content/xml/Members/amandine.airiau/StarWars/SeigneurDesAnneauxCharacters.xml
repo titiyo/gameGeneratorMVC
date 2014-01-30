@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<personnages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://Characters.org /Content/xsd/Characters.xsd">
+  <personnage type="H">
+    <nom>Boromir</nom>
+    <caracteristiques>
+      <vie>100</vie>
+      <defense>30</defense>
+      <attaque>30</attaque>
+      <initiative>10</initiative>
+    </caracteristiques>
+  </personnage>
+  <personnage type="E">
+    <nom>Gollum</nom>
+    <caracteristiques>
+      <vie>25</vie>
+      <defense>10</defense>
+      <attaque>20</attaque>
+      <initiative>30</initiative>
+    </caracteristiques>
+  </personnage>
+</personnages>

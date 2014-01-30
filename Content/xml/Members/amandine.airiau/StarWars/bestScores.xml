@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<scores>
+	<score>
+		<joueur>julien.breton</joueur>
+		<points>2000</points>
+	</score>
+	<score>
+		<joueur>amandine.airiau</joueur>
+		<points>1300</points>
+	</score>
+	<score>
+		<joueur>chris.barreto</joueur>
+		<points>1250</points>
+	</score>
+	<score>
+		<joueur>yohann.bondeau</joueur>
+		<points>1100</points>
+	</score>
+	<score>
+		<joueur>julien.breton</joueur>
+		<points>1000</points>
+	</score>
+</scores>

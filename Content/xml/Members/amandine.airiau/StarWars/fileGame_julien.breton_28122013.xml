@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<jeu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://game.org /Content/xsd/game.xsd">
+  <id>52be990d16681</id>
+  <datecreation>28122013</datecreation>
+  <nbsituation>4</nbsituation>
+  <titre>SeigneurDesAnneaux</titre>
+  <createur>julien.breton</createur>
+  <description>GuerreDuMilieu</description>
+  <difficulte>3</difficulte>
+  <situation type="Narration">
+    <situationCode>52be990d1736f</situationCode>
+    <situationTitle>Situation Narration 1</situationTitle>
+    <situationExposition>On marche en foret et arrive un croisement.</situationExposition>
+    <question>
+      <label>Que faire?</label>
+      <choix>
+        <rep val="0">Aller vers Mordor</rep>
+        <rep val="1">Aller vers Fondcombe</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>30</points>
+            <code>52be99c72bcde</code>
+          </test>
+          <test val="1">
+            <points>20</points>
+            <code>52be9a0688baf</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Combat">
+    <situationCode>52be99c72bcde</situationCode>
+    <situationTitle>Situation Combat 1</situationTitle>
+    <situationExposition>Un Gollum sauvage surgit!</situationExposition>
+    <ennemi>Gollum</ennemi>
+    <question>
+      <label>Que faire?</label>
+      <choix>
+        <rep val="0">Attaquer</rep>
+        <rep val="1">Prendre la fuite</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <si>
+              <test vieEnnemi="0">
+                <code>52be9aa843f18</code>
+                <pointsVictoire>30</pointsVictoire>
+              </test>
+              <test vieHeros="0">
+                <code>1</code>
+                <pointsDefaite>20</pointsDefaite>
+              </test>
+            </si>
+          </test>
+          <test val="1">
+            <code>52be990d1736f</code>
+            <points>5</points>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Narration">
+    <situationCode>52be9a0688baf</situationCode>
+    <situationTitle>Situation Narration 2</situationTitle>
+    <situationExposition>Vous arrivez a Fondcombe</situationExposition>
+    <question>
+      <label>Que faire?</label>
+      <choix>
+        <rep val="0">Embrasser un elfe</rep>
+        <rep val="1">Couper un arbre</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>30</points>
+            <code>1</code>
+          </test>
+          <test val="1">
+            <points>100</points>
+            <code>1</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+  <situation type="Narration">
+    <situationCode>52be9aa843f18</situationCode>
+    <situationTitle>Situation Narration 3</situationTitle>
+    <situationExposition>Vous avez tue le Gollum ennemi, vous
+    reprenez votre route.</situationExposition>
+    <question>
+      <label>Que faire?</label>
+      <choix>
+        <rep val="0">Jetter anneau dans le volcan</rep>
+      </choix>
+      <suivant>
+        <si>
+          <test val="0">
+            <points>500</points>
+            <code>1</code>
+          </test>
+        </si>
+      </suivant>
+    </question>
+  </situation>
+</jeu>
