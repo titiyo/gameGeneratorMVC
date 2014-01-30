@@ -2,7 +2,6 @@
 
 require_once 'Model/ModelUser.php';
 require_once 'Framework/Controller.php';
-require 'Content/lib/nusoap.php';
 /**
  * Contrôleur des actions liées aux billets
  *
