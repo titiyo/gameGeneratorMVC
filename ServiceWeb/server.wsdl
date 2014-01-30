@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<definitions name="AuthentifiedWorld" targetNamespace="urn:AuthentifiedWorld" xmlns:tns="urn:AuthentifiedWorld"  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:AuthentifiedNamespace">
+      <xsd:element name="getLogin" type="xsd:string" />
+	  <xsd:element name="getPwd" type="xsd:string" />
+	  <xsd:element name="isAuthentifiedResponse" type="xsd:string" />	 	  
+	</xsd:schema>			
+  </types>
+  
+  <message name="isAuthentified">
+    <part name="login" type="tns:getLogin" />
+	<part name="pwd" type="tns:getPwd" />
+  </message>
+  
+  <message name="isAuthentifiedResponse">
+    <part name="return" type="tns:isAuthentifiedResponse" />
+  </message>  
+  
+  <portType name="AuthentifiedPort">
+    <operation name="isAuthentified">
+	  <input message="tns:isAuthentified" />
+	  <output message="tns:isAuthentifiedResponse" />
+	</operation>
+  </portType>
+  
+  <binding name="AuthentifiedBinding" type="tns:AuthentifiedPort">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+	  <operation name="isAuthentified">
+	    <soap:operation soapAction="urn:AuthentifiedAction" />
+		<input>
+		  <soap:body use="encoded" namespace="urn:AuthentifiedNamespace" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />		  
+		</input>
+		<output>
+		  <soap:body use="encoded" namespace="urn:AuthentifiedNamespace" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />		  
+		</output>
+	  </operation>
+  </binding>
+  
+  <service name="AuthentifiedService">
+    <port name="AuthentifiedPort" binding="tns:AuthentifiedBinding">
+	  <soap:address location="http://localhost:8089/Projet5A/gameGeneratorMVC/ServiceWeb/server.php" />
+	</port>
+  </service>
+</definitions>
