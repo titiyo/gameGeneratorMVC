@@ -2,6 +2,7 @@
 
 require_once 'Model/ModelUser.php';
 require_once 'Framework/Controller.php';
+require 'Content/lib/nusoap.php';
 /**
  * Contrôleur des actions liées aux billets
  *
@@ -117,6 +118,16 @@ class ControllerAuthentication extends Controller {
             $this->modelUser->modifUser($this->login, $this->type, $this->email, $this->pwd);
         }
         $this->executeAction("viewUser");
+    }
+    
+    public function getWebserviceAuthentication()
+    {
+    	include 'Webservice/productList.php';
+    }
+    
+    public function getClientAuth()
+    {
+    	include 'Webservice/productlistclient.php';
     }
 }
 

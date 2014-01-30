@@ -28,6 +28,29 @@ XML;
         $xml = simplexml_load_string($stringxml);
         $xml->asXml($UserGameFile);
     }
+    
+    public function createUserFileBestScores($UserBestScoresFile)
+    {
+    	$stringxml = <<<XML
+<?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
+<scores xmlns="http://userGames.org" xsi:schemaLocation="http://userGames.org /Content/xsd/userGames.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+</scores>
+XML;
+    	
+    	$xml = simplexml_load_string($stringxml);
+    	$xml->asXml($UserBestScoresFile);
+    }
+    
+    public function createFileSavedGames($UserSavedGamesFile)
+    {
+    	$stringxml = <<<XML
+<?xml version = "1.0" encoding="ISO-8859-1" standalone = "no" ?>
+<saves xmlns="http://userGames.org" xsi:schemaLocation="http://userGames.org /Content/xsd/userGames.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+</saves>
+XML;
+    	$xml = simplexml_load_string($stringxml);
+    	$xml->asXml($UserSavedGamesFile);
+    }
 
     /**
      * @param $UserGameFile
@@ -478,5 +501,5 @@ XML;
     	}
     	return $tabCharacters;
     }
-
+    
 }

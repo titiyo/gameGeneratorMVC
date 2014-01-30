@@ -24,7 +24,7 @@
             looseInput.setAttribute("name","loosePoint");
 
             var combattreInput = $(".answerSituation").first()[0];
-            combattreInput.firstElementChild.lastElementChild.setAttribute("value","Voulez-vous attaquer ?" );
+            combattreInput.firstElementChild.lastElementChild.setAttribute("value","Attaquer" );
             combattreInput.firstElementChild.lastElementChild.setAttribute("readonly","true");
 
             var winTD = document.createElement("td");
@@ -44,7 +44,7 @@
             addAnswer();
 
             var fuiteInput = $(".answerSituation").last()[0];
-            fuiteInput.firstElementChild.lastElementChild.setAttribute("value","Voulez-vous fuir ?");
+            fuiteInput.firstElementChild.lastElementChild.setAttribute("value","Prendre la fuite");
             fuiteInput.firstElementChild.lastElementChild.setAttribute("readonly","true");
             fuiteInput.setAttribute("class","answerSituation combatElements");
             fuiteInput.children[1].lastElementChild.name = "situationNbPoint[0]";

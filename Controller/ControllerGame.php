@@ -145,6 +145,28 @@ class ControllerGame extends Controller {
             $this->modelGame->UpdateNumberOfSituation($gameFileName);
             
             /***************************************************************************
+             * 					  Create User Best Scores File
+             ***************************************************************************/
+            $UserBestScoresFile = $fileGameDirectory . "/bestScores.xml";
+            
+            if(!file_exists($UserBestScoresFile))
+            {
+            	//Create file bestScores
+            	$this->modelGame->createUserFileBestScores($UserBestScoresFile);
+            }
+            
+            /***************************************************************************
+             * 					  Create User Saved Games File
+            ***************************************************************************/
+            $UserSaveFile = $rootDirectory . "/savedGames.xml";
+            
+            if(!file_exists($UserSaveFile))
+            {
+            	// Create File User Game
+            	$this->modelGame->createFileSavedGames($UserSaveFile);
+            }
+            
+            /***************************************************************************
              *                    Create User Games
              **************************************************************************/
             $UserGameFile = $rootDirectory . "/userGames.xml";
@@ -164,6 +186,13 @@ class ControllerGame extends Controller {
         {
             $this->executeAction("createGame");
         }
+    }
+    
+    public function createBestScoresFile()
+    {
+    	$login = $_SESSION["login"];
+    	$rootDirectory = "Content/xml/Members/".$login;
+    	$fileGameDirectory = $rootDirectory . "/" .$this->gameTitle;
     }
 
     public function createSituation()

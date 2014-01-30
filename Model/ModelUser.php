@@ -9,6 +9,7 @@
 
 require_once 'Framework/Model.php';
 
+
 class ModelUser extends Model {
 
     private $fileXml;
@@ -104,5 +105,6 @@ XML;
         }
         $this->fileXml->asXml("Content/xml/users.xml");
     }
-
+    
+    
 }
