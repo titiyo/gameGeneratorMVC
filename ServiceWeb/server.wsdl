@@ -39,7 +39,7 @@
   
   <service name="AuthentifiedService">
     <port name="AuthentifiedPort" binding="tns:AuthentifiedBinding">
-	  <soap:address location="http://localhost:8089/Projet5A/gameGeneratorMVC/ServiceWeb/server.php" />
+	  <soap:address location="http://localhost:8089/gameGeneratorMVC/ServiceWeb/server.php" />
 	</port>
   </service>
 </definitions>

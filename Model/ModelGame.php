@@ -257,8 +257,6 @@ XML;
                 $item->situationTitle = $arrayForm["situationTitle"];
                 $item->situationExposition = $arrayForm["situationExposition"];
                 $item->question->label =  $arrayForm["situationQuestion"];
-
-               
                                                 
                 while(count($item->question->choix->rep) > count($arrayForm["tabSituationReponses"]))
                 {
@@ -271,13 +269,21 @@ XML;
                 	{
                 		// Modification
                 		$item->question->choix->rep[$i] = $arrayForm["tabSituationReponses"][$i];
+                		
+                		$attr = $item->question->choix->rep[$i]->attributes();
+                		              		
+                		if(count($attr)==0)
+                		{
+                			$item->question->choix->rep[$i]->addAttribute("val", $i);
+                		}
+                		
                 	}
                 	else 
                 	{
                 		//Cr�ation
-                		$rep = $item->question->choix->addChild("rep",$arrayForm["tabSituationReponses"][$i]);
+             			
+                		$rep = $item->question->choix->addChild("rep",$arrayForm["tabSituationReponses"][$i])->addAttribute("val", $i);
                 		$rep->addAttribute("val", $i);
-                		
                    	}
                 }
                 
@@ -299,26 +305,24 @@ XML;
                 	{
                 		unset($item->question->suivant->si->test);
                 	}
-                    for($i=0; $i < count($arrayForm["tabSituationPoints"]); $i++)
+                    //for($i=0; $i < count($arrayForm["tabSituationPoints"]); $i++)
+                	for($i=0; $i < count($arrayForm["tabSituationReponses"]); $i++)
                     {
-                    	if(count($item->question->suivant->si->test) >= $i)
-                    	{
                     		// Modification
                     		$item->question->suivant->si->test[$i]->points = $arrayForm["tabSituationPoints"][$i];
+                    		$item->question->suivant->si->test[$i]->code = "0";
                             if(count($arrayForm["situationMapping"]) > $i)
                             {
                                 $item->question->suivant->si->test[$i]->code = $arrayForm["situationMapping"][$i];
                             }
-                    	}
-                    	else
-                    	{
-                    		//Cr�ation
-                    		$test = $item->question->suivant->si->addChild("test");
-			                $test->addAttribute("val",$i);
-			
-			                $test->addChild("points", $arrayForm["tabSituationPoints"][$i]);
-			                $test->addChild("code", "0");
-                    	}                        
+                            
+                            if(count($item->question->suivant->si->test[$i]->attributes())==0)
+                            {
+                            	$item->question->suivant->si->test[$i]->addAttribute("val",$i);
+                            	
+                            }
+                            
+                    	                      
                     }
                 }
 

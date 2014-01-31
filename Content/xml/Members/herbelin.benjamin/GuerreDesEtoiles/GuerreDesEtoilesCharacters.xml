@@ -1,12 +1,23 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<personnages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://Characters.org /Content/xsd/Characters.xsd">
-    <personnage type="H">
-        <nom>Luke</nom>
-        <caracteristiques>
-            <vie>100</vie>
-            <defense>20</defense>
-            <attaque>20</attaque>
-            <initiative>20</initiative>
-        </caracteristiques>
-    </personnage>
-<personnage type="E"><nom>Dark Vador</nom><caracteristiques><vie>100</vie><defense>20</defense><attaque>20</attaque><initiative>20</initiative></caracteristiques></personnage></personnages>
+<?xml version="1.0" encoding="iso-8859-1" standalone="no"?>
+<personnages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://Characters.org /Content/xsd/Characters.xsd">
+
+  <personnage type="H">
+    <nom>Luke</nom>
+    <caracteristiques>
+      <vie>100</vie>
+      <defense>20</defense>
+      <attaque>20</attaque>
+      <initiative>20</initiative>
+    </caracteristiques>
+  </personnage>
+  <personnage type="E">
+    <nom>Zeus</nom>
+    <caracteristiques>
+      <vie>100</vie>
+      <defense>20</defense>
+      <attaque>20</attaque>
+      <initiative>20</initiative>
+    </caracteristiques>
+  </personnage>
+</personnages>

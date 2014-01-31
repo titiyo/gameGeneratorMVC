@@ -1,8 +1,8 @@
 <?php
 try{
-  $sClient = new SoapClient('http://localhost:8089/Projet5A/gameGeneratorMVC/ServiceWeb/server.wsdl');
+  $sClient = new SoapClient('http://localhost:8089/gameGeneratorMVC/ServiceWeb/server.wsdl');
   
-  $response = $sClient->isAuthentified("julien.breton", "jusasju");
+  $response = $sClient->isAuthentified("julien.breton", "juju");
   
   var_dump($response);
   

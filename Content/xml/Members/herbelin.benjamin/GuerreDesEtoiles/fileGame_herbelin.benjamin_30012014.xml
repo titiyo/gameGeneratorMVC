@@ -2,46 +2,44 @@
 <jeu xmlns="http://game.org"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://game.org /Content/xsd/game.xsd">
-  <id>52ea28a47a9bf</id>
+  <id>52ea95808de0c</id>
   <datecreation>30012014</datecreation>
-  <nbsituation>4</nbsituation>
-  <titre>GuerreDesEtoiles</titre>
-  <createur>herbelin.benjamin</createur>
-  <description>il court il court</description>
-  <difficulte>1</difficulte>
+  <nbsituation>2</nbsituation>
+  <titre>Monjeu</titre>
+  <createur>christophe.barreto</createur>
+  <description>Jeu de guerre</description>
+  <difficulte>2</difficulte>
   <situation type="Narration">
-    <situationCode>52ea28a484f0f</situationCode>
-    <situationTitle>Tatooine</situationTitle>
-    <situationExposition>Vous etes sur
-    Tatooine</situationExposition>
+    <situationCode>52ea95808e475</situationCode>
+    <situationTitle>Introduction</situationTitle>
+    <situationExposition>Vous etes dans une auberge.</situationExposition>
     <question>
-      <label>Que voulz-vous faire?</label>
+      <label>Ou allez vous ?</label>
       <choix>
-        <rep val="0">Rentrer dans la cantina</rep>
-        <rep val="1">Rentrer chez vous</rep>
+        <rep val="0">Je veux sortir d'ici et me rendre au bar</rep>
+        <rep val="1">Je veux sortir d'ici et me rendre à l'armurerie</rep>
       </choix>
       <suivant>
         <si>
           <test val="0">
             <points>10</points>
-            <code>52ea29491db18</code>
+            <code>1</code>
           </test>
           <test>
             <points>10</points>
-            <code>52ea29b2ec7e6</code>
+            <code>52ea9a293610b</code>
           </test>
         </si>
       </suivant>
     </question>
   </situation>
   <situation type="Combat">
-    <situationCode>52ea29491db18</situationCode>
-    <situationTitle>Combat Cantina</situationTitle>
-    <situationExposition>Un Dark Vador sauvage
-    apparait!</situationExposition>
-    <ennemi>Dark Vador</ennemi>
+    <situationCode>52ea9a293610b</situationCode>
+    <situationTitle>Rencontre avec Zeus</situationTitle>
+    <situationExposition>Il vous defie pour tester votre valeur au combat.</situationExposition>
+    <ennemi>Zeus</ennemi>
     <question>
-      <label>Que voulez-vous faire?</label>
+      <label>Qu'allez vous faire ?</label>
       <choix>
         <rep val="0">Attaquer</rep>
         <rep val="1">Prendre la fuite</rep>
@@ -51,63 +49,18 @@ xsi:schemaLocation="http://game.org /Content/xsd/game.xsd">
           <test val="0">
             <si>
               <test vieEnnemi="0">
-                <code>52ea298bee641</code>
-                <pointsVictoire>100</pointsVictoire>
+                <code>0</code>
+                <pointsVictoire>200</pointsVictoire>
               </test>
               <test vieHeros="0">
-                <code>1</code>
-                <pointsDefaite>50</pointsDefaite>
+                <code>0</code>
+                <pointsDefaite>10</pointsDefaite>
               </test>
             </si>
           </test>
           <test val="1">
-            <code>52ea28a484f0f</code>
-            <points>2</points>
-          </test>
-        </si>
-      </suivant>
-    </question>
-  </situation>
-  <situation type="Narration">
-    <situationCode>52ea298bee641</situationCode>
-    <situationTitle>Victoire cantina</situationTitle>
-    <situationExposition>Vous avez vaincu le Dark Vador
-    ennemi!</situationExposition>
-    <question>
-      <label>Que voulez-vous faire?</label>
-      <choix>
-        <rep val="0">Sauter dans la fosse du Sarlac</rep>
-        <rep val="1">Faire exploser R2-D2</rep>
-      </choix>
-      <suivant>
-        <si>
-          <test val="0">
-            <points>100</points>
             <code>0</code>
-          </test>
-          <test val="1">
-            <points>100</points>
-            <code>0</code>
-          </test>
-        </si>
-      </suivant>
-    </question>
-  </situation>
-  <situation type="Narration">
-    <situationCode>52ea29b2ec7e6</situationCode>
-    <situationTitle>Situation maison</situationTitle>
-    <situationExposition>Vous arrivez chez
-    vous</situationExposition>
-    <question>
-      <label>Que voulez-vous faire?</label>
-      <choix>
-        <rep val="0">Terminer le jeu</rep>
-      </choix>
-      <suivant>
-        <si>
-          <test val="0">
-            <points>200</points>
-            <code>1</code>
+            <points>30</points>
           </test>
         </si>
       </suivant>
